@@ -3,95 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synthera | Blog & Insights</title>
+    <title>Synthera | Insights</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { brand: { 950: '#020617', 900: '#0f172a', 500: '#3b82f6' } }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased">
-
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition shadow-sm">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
-                <span class="font-black text-xl uppercase tracking-tighter text-brand-900">Synthera <span class="text-brand-500">Blog</span></span>
-            </div>
-            <a href="teste.html" class="hidden md:block bg-brand-900 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-brand-500 transition">Fazer Teste Grátis</a>
+<body class="bg-slate-50 text-slate-900 font-sans">
+    
+    <nav class="bg-white border-b border-slate-100 p-5 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="painel.html" class="text-slate-400 hover:text-blue-600 font-bold transition"><i class="fa-solid fa-arrow-left mr-2"></i> Voltar ao Painel</a>
+            <span class="text-xl font-black italic tracking-tighter text-blue-600">SYNTHERA<span class="text-slate-900">.ACADEMY</span></span>
         </div>
     </nav>
 
-    <header class="py-20 bg-brand-900 text-white overflow-hidden relative">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h1 class="text-4xl md:text-6xl font-black mb-6">Explore a Ciência do Comportamento</h1>
-            <p class="text-slate-400 text-lg md:text-xl">Artigos, guias e insights para você dominar suas Soft Skills e acelerar sua carreira.</p>
-        </div>
+    <header class="max-w-5xl mx-auto py-16 px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-black mb-4 text-slate-900">Inteligência Comportamental</h1>
+        <p class="text-slate-500 text-lg">Artigos e estudos sobre a metodologia DISC para maximizar seu potencial.</p>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            
-            <article class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden hover:shadow-2xl transition-all group">
-                <div class="h-48 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-5xl">
-                    <i class="fa-solid fa-microscope group-hover:scale-110 transition duration-500"></i>
-                </div>
-                <div class="p-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Metodologia</span>
-                        <span class="text-slate-400 text-xs font-bold">5 min de leitura</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-brand-900 mb-4 group-hover:text-brand-500 transition">O que é a Metodologia DISC?</h2>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Entenda como as quatro dimensões do comportamento humano influenciam sua produtividade e liderança.</p>
-                    <button class="font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Ler Artigo Completo <i class="fa-solid fa-arrow-right"></i></button>
-                </div>
-            </article>
+    <main class="max-w-5xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <a href="post.html?id=o-que-e-disc" class="group bg-white rounded-[2rem] border border-slate-100 p-8 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col justify-between h-full">
+            <div>
+                <span class="text-blue-600 text-[10px] font-black uppercase tracking-widest mb-4 block">Metodologia</span>
+                <h3 class="text-2xl font-black mb-4 group-hover:text-blue-600 transition-colors">O que é a Metodologia DISC e por que ela é o padrão ouro?</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-8">Entenda a teoria do Dr. William Moulton Marston e como os quatro pilares moldam o nosso comportamento diário, nossas decisões e nossa forma de interagir com o mundo.</p>
+            </div>
+            <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-blue-600 group-hover:translate-x-2 transition-transform"></i></span>
+        </a>
 
-            <article class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden hover:shadow-2xl transition-all group">
-                <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white text-5xl">
-                    <i class="fa-solid fa-graduation-cap group-hover:scale-110 transition duration-500"></i>
-                </div>
-                <div class="p-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Educação</span>
-                        <span class="text-slate-400 text-xs font-bold">4 min de leitura</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-brand-900 mb-4 group-hover:text-brand-500 transition">Como cada perfil aprende?</h2>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Descubra por que um Dominante prefere vídeos rápidos enquanto um Analista prefere PDFs detalhados.</p>
-                    <button class="font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Ler Artigo Completo <i class="fa-solid fa-arrow-right"></i></button>
-                </div>
-            </article>
+        <a href="post.html?id=educacao-adaptativa" class="group bg-white rounded-[2rem] border border-slate-100 p-8 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col justify-between h-full">
+            <div>
+                <span class="text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-4 block">Aprendizado</span>
+                <h3 class="text-2xl font-black mb-4 group-hover:text-emerald-500 transition-colors">Educação Adaptativa: Como cada perfil absorve conhecimento?</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-8">O segredo do engajamento escolar e corporativo: descubra por que algumas pessoas preferem debates dinâmicos enquanto outras precisam de manuais técnicos.</p>
+            </div>
+            <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-emerald-500 group-hover:translate-x-2 transition-transform"></i></span>
+        </a>
 
-            <article class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden hover:shadow-2xl transition-all group">
-                <div class="h-48 bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-5xl">
-                    <i class="fa-solid fa-users-gear group-hover:scale-110 transition duration-500"></i>
-                </div>
-                <div class="p-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Carreira</span>
-                        <span class="text-slate-400 text-xs font-bold">6 min de leitura</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-brand-900 mb-4 group-hover:text-brand-500 transition">Liderança Situacional</h2>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Aprenda a adaptar sua comunicação para gerir times diversos com base no perfil de cada colaborador.</p>
-                    <button class="font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Ler Artigo Completo <i class="fa-solid fa-arrow-right"></i></button>
-                </div>
-            </article>
+        <a href="post.html?id=gestao-de-projetos" class="group bg-white rounded-[2rem] border border-slate-100 p-8 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col justify-between h-full">
+            <div>
+                <span class="text-purple-500 text-[10px] font-black uppercase tracking-widest mb-4 block">Gestão e Liderança</span>
+                <h3 class="text-2xl font-black mb-4 group-hover:text-purple-500 transition-colors">O impacto do DISC na gestão de projetos e equipes</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-8">Como líderes e gestores de projetos utilizam a análise comportamental para reduzir conflitos, alinhar expectativas e alocar talentos corretamente.</p>
+            </div>
+            <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-purple-500 group-hover:translate-x-2 transition-transform"></i></span>
+        </a>
 
-        </div>
     </main>
-
-    <footer class="bg-white border-t border-slate-200 py-12 text-center">
-        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Synthera Academy</p>
-    </footer>
-
 </body>
 </html>

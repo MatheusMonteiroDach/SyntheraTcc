@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Sobre o Projeto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Animações Customizadas */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans overflow-x-hidden">
+    
+    <nav class="bg-white/80 backdrop-blur-lg border-b border-slate-100 p-5 fixed w-full top-0 z-50 transition-all">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-black italic tracking-tighter text-blue-600">SYNTHERA<span class="text-slate-900">.PRO</span></a>
+            <div class="flex gap-6 items-center">
+                <a href="index.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition hidden md:block">Início</a>
+                <a href="blog.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition hidden md:block">Insights</a>
+                <a href="login.html" class="bg-slate-900 text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-blue-600 transition-all shadow-lg shadow-slate-900/20">Acessar Plataforma</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-20 px-6 max-w-5xl mx-auto text-center animate-fade-up">
+        <div class="inline-block bg-blue-50 text-blue-600 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-full mb-6 border border-blue-100 animate-float">O Nosso Propósito</div>
+        <h1 class="text-5xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tighter">
+            Não é só sobre conseguir um emprego.<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">É sobre encontrar o seu lugar.</span>
+        </h1>
+        <p class="text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed font-medium">
+            O Synthera nasceu com uma missão clara: democratizar o acesso a um mercado de trabalho sadio. Nós conectamos a formação educacional (EJA e cursos profissionalizantes) com o mais profundo autoconhecimento comportamental.
+        </p>
+    </header>
+
+    <section class="max-w-6xl mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="bg-white p-10 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/20 hover:-translate-y-2 transition-transform duration-300 animate-fade-up delay-100 group relative overflow-hidden">
+                <div class="absolute -right-8 -top-8 text-slate-50 text-8xl group-hover:text-blue-50 transition-colors z-0"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="relative z-10">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner"><i class="fa-solid fa-book-open"></i></div>
+                    <h3 class="text-2xl font-black mb-4 text-slate-800">Educação Acessível</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">Fugimos da lógica dos subempregos. Oferecemos suporte para EJA e cursos profissionalizantes de alto nível, preparando você com as hard skills que o mercado realmente exige hoje.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-10 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/20 hover:-translate-y-2 transition-transform duration-300 animate-fade-up delay-200 group relative overflow-hidden">
+                <div class="absolute -right-8 -top-8 text-slate-50 text-8xl group-hover:text-emerald-50 transition-colors z-0"><i class="fa-solid fa-brain"></i></div>
+                <div class="relative z-10">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner"><i class="fa-solid fa-chart-radar"></i></div>
+                    <h3 class="text-2xl font-black mb-4 text-slate-800">O Teste DISC</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">Entrar no mercado sem se conhecer é caminhar no escuro. Mapeamos o seu perfil para mostrar seus pontos fortes, o que precisa ser desenvolvido e as áreas de atuação onde você vai brilhar naturalmente.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-10 rounded-[2rem] shadow-2xl hover:-translate-y-2 transition-transform duration-300 animate-fade-up delay-300 text-white relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-white/5 text-8xl z-0"><i class="fa-solid fa-handshake"></i></div>
+                <div class="relative z-10">
+                    <div class="w-14 h-14 bg-white/10 text-white rounded-2xl flex items-center justify-center text-2xl mb-6 backdrop-blur-sm"><i class="fa-solid fa-unlock-keyhole"></i></div>
+                    <h3 class="text-2xl font-black mb-4">100% Gratuito</h3>
+                    <p class="text-slate-300 leading-relaxed text-sm">O conhecimento deve ser livre. Nossa plataforma é totalmente gratuita para o usuário final, sendo fomentada por um modelo inteligente e ético de anúncios e parcerias corporativas.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bg-white border-t border-slate-100 py-24">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
+            <div class="md:w-1/2 animate-fade-up">
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">Chega de se sentir perdido no ambiente corporativo.</h2>
+                <p class="text-slate-500 mb-6 leading-relaxed">O Synthera não apenas diz quem você é, mas te entrega a bússola de como agir. Ao cruzar a sua formação profissionalizante com o seu perfil comportamental, criamos uma trilha de evolução real.</p>
+                <ul class="space-y-4 font-bold text-slate-700">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-emerald-500"></i> Sugestões de carreira personalizadas</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-emerald-500"></i> Pontos cegos de comunicação mapeados</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-emerald-500"></i> Preparação para entrevistas e dinâmicas</li>
+                </ul>
+            </div>
+            <div class="md:w-1/2 relative animate-fade-up delay-200">
+                <div class="aspect-square bg-gradient-to-tr from-blue-100 to-emerald-50 rounded-[3rem] p-8 relative overflow-hidden flex items-center justify-center shadow-inner">
+                    <i class="fa-solid fa-rocket text-9xl text-blue-600/20 animate-float"></i>
+                    <div class="absolute bottom-10 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-float" style="animation-delay: 1s;">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                        <div>
+                            <p class="text-xs font-black text-slate-400 uppercase">Evolução</p>
+                            <p class="text-sm font-bold text-slate-900">Trilha Ativada</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 py-20 text-center px-6">
+        <h2 class="text-3xl font-black text-white mb-6">Pronto para dar o próximo passo?</h2>
+        <p class="text-slate-400 mb-10 max-w-2xl mx-auto">Crie sua conta gratuitamente, faça o teste DISC e comece hoje mesmo a desenhar o seu futuro profissional.</p>
+        <a href="login.html" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-lg hover:bg-blue-500 hover:scale-105 transition-all shadow-xl shadow-blue-600/30">
+            Fazer meu Teste Grátis
+        </a>
+    </footer>
+
+</body>
+</html>

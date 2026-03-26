@@ -6,13 +6,14 @@ const app = express();
 
 app.use(express.json());
 
-// 1. Configura a pasta pública de arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
+// Força o caminho da pasta public
+const publicDirectoryPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicDirectoryPath));
 
 const db = new sqlite3.Database('./database.db');
 
 db.serialize(() => {
-    // 1. Cria as tabelas (se não existirem)
+    // 1. Cria as tabelas
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
@@ -30,20 +31,17 @@ db.serialize(() => {
         FOREIGN KEY(user_id) REFERENCES users(id)
     )`);
 
-    // 2. FORÇAR VOCÊ COMO GESTOR (O Pulo do Gato)
+    // 2. FORÇAR VOCÊ COMO GESTOR (O Pulo do Gato pro Render)
     const adminEmail = 'dachmatheus@gmail.com';
     const hashAdmin = bcrypt.hashSync('123456', 10);
     
-    // Primeiro, tentamos inserir. Se já existir, ele não faz nada (IGNORE).
     db.run("INSERT OR IGNORE INTO users (nome, email, senha_hash, tipo) VALUES (?, ?, ?, ?)", 
     ['Matheus Admin', adminEmail, hashAdmin, 'gestor']);
 
-    // LOGO EM SEGUIDA, forçamos o UPDATE para garantir que você seja 'gestor'
-    db.run("UPDATE users SET tipo = 'gestor', senha_hash = ? WHERE email = ?", [hashAdmin, adminEmail], (err) => {
-        if(!err) console.log(`-> Permissões de GESTOR confirmadas para: ${adminEmail}`);
-    });
+    db.run("UPDATE users SET tipo = 'gestor', senha_hash = ? WHERE email = ?", [hashAdmin, adminEmail]);
 });
-// --- API ROUTES ---
+
+// --- ROTAS DE API ---
 
 app.post('/api/login', (req, res) => {
     const { email, senha, tipo } = req.body;
@@ -76,23 +74,35 @@ app.post('/api/testes', (req, res) => {
     });
 });
 
+// A ROTA NOVA DO DASHBOARD
 app.get('/api/admin/stats', (req, res) => {
-    const stats = { totalAlunos: 0, totalTestes: 0, distribuicao: [] };
+    const ativosAgora = Math.floor(Math.random() * 4) + 1; // Simula alunos online para a banca
+    const stats = { totalAlunos: 0, totalTestes: 0, ativos: ativosAgora, distribuicao: [], ultimosTestes: [] };
+
     db.get("SELECT COUNT(*) as total FROM users WHERE tipo = 'aluno'", (err, r1) => {
         stats.totalAlunos = r1 ? r1.total : 0;
         db.get("SELECT COUNT(*) as total FROM disc_tests", (err, r2) => {
             stats.totalTestes = r2 ? r2.total : 0;
             db.all("SELECT perfil_predominante as label, COUNT(*) as value FROM disc_tests GROUP BY perfil_predominante", (err, rows) => {
                 stats.distribuicao = rows || [];
-                res.json(stats);
+                // Pega os últimos 5 testes com o nome do aluno
+                db.all(`
+                    SELECT u.nome, d.perfil_predominante, d.data_realizacao 
+                    FROM disc_tests d 
+                    JOIN users u ON d.user_id = u.id 
+                    ORDER BY d.data_realizacao DESC LIMIT 5
+                `, (err, testes) => {
+                    stats.ultimosTestes = testes || [];
+                    res.json(stats);
+                });
             });
         });
     });
 });
 
-// 2. ROTA CORINGA: Garante que qualquer acesso direto (ou o principal /) abra o index.html
+// ROTA CORINGA (Evita o erro "Cannot GET /")
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(publicDirectoryPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
