@@ -3,180 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synthera | Meu Painel</title>
+    <title>Synthera | Painel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { brand: { 950: '#020617', 900: '#0f172a', 500: '#3b82f6' } },
-                    animation: { 'fade-in': 'fadeIn 0.5s ease-out' },
-                    keyframes: { fadeIn: { '0%': { opacity: 0, transform: 'translateY(10px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } } }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { colors: { brand: { 950: '#020617', 900: '#0f172a', 500: '#3b82f6' } } } } }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased flex flex-col md:flex-row min-h-screen">
-
-    <aside class="w-full md:w-72 bg-brand-900 text-white p-6 flex flex-col shadow-2xl z-50">
-        <div class="flex items-center gap-3 mb-10">
-            <i class="fa-solid fa-brain text-brand-500 text-2xl"></i>
-            <span class="font-black text-2xl uppercase tracking-tighter">Synthera</span>
-        </div>
-        
-        <nav class="flex-grow space-y-3">
-            <a href="index.html" class="flex items-center gap-3 p-4 hover:bg-slate-800 rounded-2xl transition group">
-                <i class="fa-solid fa-house text-slate-400 group-hover:text-brand-500"></i> Home
-            </a>
-            <a href="#" class="flex items-center gap-3 p-4 bg-brand-500 rounded-2xl font-bold shadow-lg shadow-blue-500/20">
-                <i class="fa-solid fa-chart-line"></i> Dashboard
-            </a>
-            <a href="teste.html" class="flex items-center gap-3 p-4 hover:bg-slate-800 rounded-2xl transition group">
-                <i class="fa-solid fa-clipboard-check text-slate-400 group-hover:text-brand-500"></i> Novo Teste
-            </a>
-            <a href="blog.html" class="flex items-center gap-3 p-4 hover:bg-slate-800 rounded-2xl transition group">
-                <i class="fa-solid fa-newspaper text-slate-400 group-hover:text-brand-500"></i> Blog & Insights
-            </a>
+<body class="bg-slate-50 text-slate-900 flex flex-col md:flex-row min-h-screen">
+    <aside class="w-full md:w-72 bg-brand-900 text-white p-8 flex flex-col shadow-2xl">
+        <div class="flex items-center gap-3 mb-12"><i class="fa-solid fa-brain text-brand-500 text-2xl"></i><span class="font-black text-2xl uppercase tracking-tighter">Synthera</span></div>
+        <nav class="flex-grow space-y-4">
+            <a href="#" class="flex items-center gap-3 p-4 bg-brand-500 rounded-2xl font-bold shadow-lg shadow-blue-500/20"><i class="fa-solid fa-chart-line"></i> Painel</a>
+            <a href="teste.html" class="flex items-center gap-3 p-4 hover:bg-slate-800 rounded-2xl transition"><i class="fa-solid fa-clipboard-check"></i> Fazer Teste</a>
+            <a href="blog.html" class="flex items-center gap-3 p-4 hover:bg-slate-800 rounded-2xl transition"><i class="fa-solid fa-newspaper"></i> Blog</a>
         </nav>
-
-        <button id="btn-logout" class="mt-auto flex items-center gap-3 p-4 text-red-400 hover:bg-red-500/10 rounded-2xl transition font-bold">
-            <i class="fa-solid fa-right-from-bracket"></i> Sair do Sistema
-        </button>
+        <button id="btn-logout" class="mt-auto flex items-center gap-3 p-4 text-red-400 font-bold"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
     </aside>
 
-    <main class="flex-grow p-6 md:p-12 overflow-y-auto animate-fade-in">
-        
-        <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition shadow-sm" title="Voltar para Home">
-                    <i class="fa-solid fa-arrow-left text-slate-600"></i>
-                </a>
-                <div>
-                    <h1 class="text-3xl font-black text-brand-900" id="welcome-msg">Olá, Carregando...</h1>
-                    <p class="text-slate-500 font-medium">Análise comportamental e plano de carreira.</p>
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <button class="bg-white p-3 rounded-xl border border-slate-200 hover:shadow-md transition"><i class="fa-solid fa-bell text-slate-400"></i></button>
-                <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg" id="user-initials">U</div>
-            </div>
+    <main class="flex-grow p-6 md:p-12">
+        <header class="mb-12 flex items-center gap-6">
+            <a href="index.html" class="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-slate-200 hover:bg-slate-100 transition shadow-sm" title="Voltar"><i class="fa-solid fa-arrow-left text-brand-900"></i></a>
+            <div><h1 class="text-4xl font-black text-brand-900" id="welcome-msg">Bem-vindo</h1><p class="text-slate-500 font-medium">Sua inteligência comportamental aplicada.</p></div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            
-            <div class="lg:col-span-2 bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-                <div id="perfil-bg-icon" class="absolute -right-10 -bottom-10 text-slate-50 text-[12rem] font-black pointer-events-none">?</div>
-                <div id="perfil-color-tag" class="w-32 h-32 rounded-3xl flex items-center justify-center text-white text-5xl font-black shadow-2xl transition-all duration-500">?</div>
-                <div class="relative z-10">
-                    <span class="bg-slate-100 text-slate-500 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Perfil Dominante</span>
-                    <h2 class="text-4xl font-black mt-2 mb-4" id="perfil-titulo">Ainda não testado</h2>
-                    <p class="text-slate-600 leading-relaxed max-w-md" id="perfil-desc">Realize o teste DISC para desbloquear sua análise de personalidade e sugestões de carreira.</p>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <div class="lg:col-span-2 bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-sm flex items-center gap-10">
+                <div id="perfil-icon" class="w-24 h-24 rounded-3xl flex items-center justify-center text-white text-5xl font-black bg-slate-200 transition-all duration-700">?</div>
+                <div><span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Seu Perfil Principal</span><h2 class="text-4xl font-black mt-2" id="perfil-nome">Pendente</h2></div>
             </div>
-
-            <div class="bg-brand-900 text-white p-8 rounded-[2rem] shadow-xl flex flex-col justify-between">
-                <div>
-                    <h3 class="font-bold text-xl mb-2">Sua Jornada</h3>
-                    <p class="text-slate-400 text-sm">Complete sua trilha de autoconhecimento.</p>
-                </div>
-                <div class="mt-8">
-                    <div class="flex justify-between text-xs font-bold mb-2 uppercase tracking-tighter">
-                        <span>Conclusão do Perfil</span>
-                        <span id="progresso-percent">0%</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
-                        <div id="progresso-bar" class="bg-brand-500 h-full transition-all duration-1000" style="width: 0%"></div>
-                    </div>
-                </div>
+            <div class="bg-brand-950 text-white p-10 rounded-[2.5rem] flex flex-col justify-center">
+                <span class="text-slate-500 text-xs font-bold uppercase mb-4">Status da Avaliação</span>
+                <h3 class="text-2xl font-bold mb-4" id="status-txt">Incompleto</h3>
+                <div class="w-full bg-slate-800 h-3 rounded-full"><div id="progresso-bar" class="bg-brand-500 h-full transition-all duration-1000" style="width: 0%"></div></div>
             </div>
         </div>
 
-        <section class="mb-12">
-            <h3 class="text-2xl font-black text-brand-900 mb-6 flex items-center gap-3">
-                <i class="fa-solid fa-briefcase text-brand-500"></i> Plano de Carreira Sugerido
-            </h3>
-            <div id="carreira-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center text-slate-400">
-                    Aguardando resultado do teste...
-                </div>
-            </div>
-        </section>
-
+        <h3 class="text-2xl font-black mb-8 flex items-center gap-3"><i class="fa-solid fa-briefcase text-brand-500"></i> Sugestões de Carreira</h3>
+        <div id="carreira-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-8 text-slate-400 italic">Realize o teste para ver as recomendações.</div>
+        </div>
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const nome = localStorage.getItem('synthera_user_nome') || 'Usuário';
             const scores = JSON.parse(localStorage.getItem('synthera_scores'));
-            
             document.getElementById('welcome-msg').textContent = `Olá, ${nome.split(' ')[0]}!`;
-            document.getElementById('user-initials').textContent = nome.charAt(0).toUpperCase();
 
-            // Mapeamento Inteligente (Substitui a lógica de sort manual)
-            const baseConhecimento = {
-                'D': {
-                    titulo: 'Dominância (Executor)',
-                    cor: 'bg-red-500',
-                    desc: 'Você é focado em resultados, direto e aceita desafios com facilidade.',
-                    carreiras: ['Diretoria Executiva', 'Gerência de Projetos', 'Vendas B2B', 'Direito'],
-                    icone: 'fa-bolt'
-                },
-                'I': {
-                    titulo: 'Influência (Comunicador)',
-                    cor: 'bg-yellow-400',
-                    desc: 'Você é entusiasta, persuasivo e adora trabalhar com pessoas.',
-                    carreiras: ['Marketing & Ads', 'Recursos Humanos', 'Relações Públicas', 'Treinamentos'],
-                    icone: 'fa-bullhorn'
-                },
-                'S': {
-                    titulo: 'Estabilidade (Planejador)',
-                    cor: 'bg-green-500',
-                    desc: 'Você é paciente, leal e busca harmonia e segurança no ambiente.',
-                    carreiras: ['Sucesso do Cliente', 'Administração', 'Educação', 'Logística'],
-                    icone: 'fa-leaf'
-                },
-                'C': {
-                    titulo: 'Conformidade (Analista)',
-                    cor: 'bg-blue-500',
-                    desc: 'Você é preciso, lógico e prioriza a qualidade e os fatos.',
-                    carreiras: ['Desenvolvimento TI', 'Auditoria de Dados', 'Engenharia', 'Finanças'],
-                    icone: 'fa-check-double'
-                }
+            const mapping = {
+                'D': { titulo: 'Dominância', cor: 'bg-red-500', carreiras: ['Diretor Executivo', 'Vendas B2B', 'Gerente de Projetos', 'Advogado'] },
+                'I': { titulo: 'Influência', cor: 'bg-yellow-400', carreiras: ['Marketing', 'RH', 'Palestrante', 'Relações Públicas'] },
+                'S': { titulo: 'Estabilidade', cor: 'bg-green-500', carreiras: ['Administrador', 'Educador', 'Sucesso do Cliente', 'Logística'] },
+                'C': { titulo: 'Conformidade', cor: 'bg-blue-500', carreiras: ['Desenvolvedor TI', 'Analista de Dados', 'Auditor', 'Engenheiro'] }
             };
 
             if (scores) {
-                // Encontrar o perfil dominante
                 const dom = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-                const info = baseConhecimento[dom];
-
-                // Atualizar UI
-                document.getElementById('perfil-titulo').textContent = info.titulo;
-                document.getElementById('perfil-desc').textContent = info.desc;
-                document.getElementById('perfil-color-tag').textContent = dom;
-                document.getElementById('perfil-color-tag').classList.add(info.cor);
-                document.getElementById('perfil-bg-icon').textContent = dom;
+                const info = mapping[dom];
+                document.getElementById('perfil-nome').textContent = info.titulo;
+                document.getElementById('perfil-icon').textContent = dom;
+                document.getElementById('perfil-icon').className = `w-24 h-24 rounded-3xl flex items-center justify-center text-white text-5xl font-black ${info.cor}`;
+                document.getElementById('status-txt').textContent = 'Concluído';
                 document.getElementById('progresso-bar').style.width = '100%';
-                document.getElementById('progresso-percent').textContent = '100%';
-
-                // Gerar Cards de Carreira
-                const container = document.getElementById('carreira-container');
-                container.innerHTML = info.carreiras.map(c => `
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 hover:border-brand-500 hover:shadow-xl transition-all group">
-                        <div class="w-12 h-12 ${info.cor} bg-opacity-10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-graduation-cap text-slate-800"></i>
-                        </div>
-                        <h4 class="font-bold text-slate-900">${c}</h4>
-                        <p class="text-xs text-slate-400 mt-2 font-semibold">MATCH DE 95%</p>
-                    </div>
-                `).join('');
+                document.getElementById('carreira-container').innerHTML = info.carreiras.map(c => `<div class="bg-white p-6 rounded-2xl border border-slate-200 hover:border-brand-500 transition shadow-sm"><h4 class="font-bold text-slate-900">${c}</h4><p class="text-xs text-brand-500 mt-2 font-bold uppercase">Match Perfeito</p></div>`).join('');
             }
 
-            document.getElementById('btn-logout').onclick = () => {
-                localStorage.clear();
-                window.location.href = 'index.html';
-            };
+            document.getElementById('btn-logout').onclick = () => { localStorage.clear(); window.location.href = 'index.html'; };
         });
     </script>
 </body>

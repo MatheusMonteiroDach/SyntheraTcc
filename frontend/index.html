@@ -4,32 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synthera | Inteligência Comportamental Adaptativa</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+    <style>
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #3b82f6 } }
+        .typewriter { overflow: hidden; white-space: nowrap; border-right: 4px solid #3b82f6; animation: typing 1.5s steps(5) 1s forwards, blink .75s step-end infinite; width: 0; }
+        .delay-500 { animation-delay: 500ms; }
+    </style>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: { brand: { 950: '#020617', 900: '#0f172a', 500: '#3b82f6' } },
-                    animation: { 
-                        'logo-glow': 'glow 3s ease-in-out infinite',
-                        'float': 'float 6s ease-in-out infinite'
-                    },
+                    animation: { 'blob': 'blob 10s infinite', 'float': 'float 6s ease-in-out infinite' },
                     keyframes: {
-                        glow: {
-                            '0%, 100%': { filter: 'drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))', transform: 'scale(1)' },
-                            '50%': { filter: 'drop-shadow(0 0 15px rgba(59, 130, 246, 0.8))', transform: 'scale(1.02)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
+                        blob: { '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' }, '33%': { transform: 'translate(30px, -50px) scale(1.1)' }, '66%': { transform: 'translate(-20px, 20px) scale(0.9)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-20px)' } }
                     }
                 }
             }
@@ -39,145 +32,75 @@
 <body class="bg-slate-50 text-slate-900 antialiased overflow-x-hidden">
 
     <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl z-[100] border-b border-slate-200">
-        <div class="max-w-[90rem] mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-2 animate-logo-glow">
-                <i class="fa-solid fa-brain text-brand-500 text-2xl"></i>
-                <span class="font-black text-2xl tracking-tighter text-brand-900 uppercase">Synthera</span>
-            </div>
-            <div class="hidden lg:flex items-center gap-10 text-sm font-semibold text-slate-600">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2 animate-pulse"><i class="fa-solid fa-brain text-brand-500 text-2xl"></i><span class="font-black text-2xl tracking-tighter text-brand-900 uppercase">Synthera</span></div>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-600">
                 <a href="#sobre" class="hover:text-brand-500 transition">Sobre</a>
-                <a href="#metodologia" class="hover:text-brand-500 transition">Estilos DISC</a>
-                <a href="blog.html" class="hover:text-brand-500 transition">Blog</a>
-                <a href="login.html" id="nav-auth-btn" class="bg-brand-900 text-white px-7 py-2.5 rounded-full hover:bg-brand-500 transition shadow-lg shadow-blue-500/10">Acessar Painel</a>
+                <a href="#metodologia" class="hover:text-brand-500 transition">DISC</a>
+                <a href="blog.html" class="hover:text-brand-500 transition font-bold">Blog</a>
+                <a href="login.html" id="nav-auth-btn" class="bg-brand-900 text-white px-7 py-2.5 rounded-full hover:bg-brand-500 transition shadow-lg">Acessar Painel</a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-32 pb-20 lg:pt-48 lg:pb-40 bg-brand-950 text-white relative text-center overflow-hidden">
-        <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-500/20 rounded-full blur-[100px] animate-float"></div>
+    <section class="min-h-screen flex items-center justify-center bg-brand-950 text-white relative overflow-hidden px-6 pt-20">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-1/4 -left-10 w-96 h-96 bg-brand-500/20 rounded-full blur-[120px] animate-blob"></div>
+            <div class="absolute bottom-1/4 -right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] animate-blob" style="animation-delay: 2s"></div>
+        </div>
         
-        <div class="max-w-7xl mx-auto px-6 relative z-10" data-aos="fade-up" data-aos-duration="1000">
-            <span class="inline-flex bg-brand-500/10 text-brand-500 px-5 py-2 rounded-full font-bold text-sm mb-6 border border-brand-500/20">Plataforma Educacional DISC</span>
-            <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight">
-                Educação que entende <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">você.</span>
+        <div class="max-w-4xl mx-auto text-center relative z-10" data-aos="fade-up">
+            <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter">
+                Educação que entende <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 typewriter mx-auto block">você.</span>
             </h1>
-            <p class="text-slate-400 text-xl max-w-2xl mx-auto mb-12">
-                Descubra seu perfil comportamental dominante e personalize sua jornada de aprendizado com inteligência adaptativa.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="teste.html" class="inline-flex bg-white text-brand-900 px-12 py-5 rounded-full font-bold text-xl hover:bg-brand-500 hover:text-white transition-all shadow-2xl hover:-translate-y-1">
-                    Começar Avaliação
-                </a>
-                <a href="#sobre" class="text-slate-300 font-semibold flex items-center gap-2 group">Saiba mais <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition"></i></a>
+            <p class="text-slate-400 text-xl mb-12 max-w-2xl mx-auto">O futuro do desenvolvimento humano passa pelo autoconhecimento. Descubra seu perfil DISC e personalize sua jornada.</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="teste.html" class="bg-white text-brand-900 px-12 py-5 rounded-full font-bold text-xl hover:bg-brand-500 hover:text-white transition shadow-2xl hover:-translate-y-1">Começar Avaliação</a>
+                <a href="#blog" class="px-12 py-5 rounded-full font-bold text-xl border border-slate-700 hover:bg-slate-800 transition">Ver Insights</a>
             </div>
         </div>
     </section>
 
-    <section id="sobre" class="py-32 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-        <div data-aos="fade-right">
-            <h2 class="text-5xl font-black text-brand-900 mb-6">A Ciência do Autoconhecimento</h2>
-            <p class="text-slate-600 leading-relaxed mb-6">Utilizamos a metodologia DISC para mapear suas tendências comportamentais. Dominância, Influência, Estabilidade e Conformidade não são rótulos, mas sim lentes para entender como você aprende, decide e interage.</p>
-            <div class="grid grid-cols-2 gap-6 text-sm font-bold text-brand-900">
-                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Relatórios Dinâmicos</div>
-                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Trilhas Adaptativas</div>
-            </div>
+    <section id="blog" class="py-32 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl font-black text-brand-900">Synthera <span class="text-brand-500">Academy Blog</span></h2>
+            <p class="text-slate-500 mt-2">Insights exclusivos sobre comportamento e educação.</p>
         </div>
-        <div class="bg-white p-10 rounded-[2rem] border border-slate-200 shadow-xl relative" data-aos="fade-left">
-            <i class="fa-solid fa-quote-left text-brand-500/20 text-7xl absolute top-6 left-6"></i>
-            <p class="text-slate-700 italic text-lg leading-relaxed relative z-10">"Conhecer a si mesmo é o começo de toda sabedoria. O Synthera traduz isso em aprendizado eficiente."</p>
-            <div class="mt-6 font-bold">- Aristóteles (Adaptado para o TCC)</div>
-        </div>
-    </section>
-
-    <section id="metodologia" class="py-32 bg-slate-100 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-black text-brand-900">As Quatro Dimensões do Perfil</h2>
-                <p class="text-slate-500 mt-2 max-w-md mx-auto">Explore as características principais de cada estilo comportamental da nossa matriz.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="group p-8 bg-white rounded-3xl border border-slate-200 transition-all duration-300 hover:-translate-y-4 hover:border-red-500 hover:shadow-[0_20px_50px_rgba(239,68,68,0.1)]" data-aos="zoom-in" data-aos-delay="100">
-                    <i class="fa-solid fa-bolt text-red-500 text-4xl mb-6"></i>
-                    <h3 class="font-bold text-2xl mb-3">Dominância</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Foco em resultados, assertividade e rapidez na tomada de decisão. Gosta de desafios.</p>
-                </div>
-                <div class="group p-8 bg-white rounded-3xl border border-slate-200 transition-all duration-300 hover:-translate-y-4 hover:border-yellow-500 hover:shadow-[0_20px_50px_rgba(234,179,8,0.1)]" data-aos="zoom-in" data-aos-delay="200">
-                    <i class="fa-solid fa-bullhorn text-yellow-500 text-4xl mb-6"></i>
-                    <h3 class="font-bold text-2xl mb-3">Influência</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Habilidade de persuasão, entusiasmo e forte conexão social. Gosta de colaborar.</p>
-                </div>
-                <div class="group p-8 bg-white rounded-3xl border border-slate-200 transition-all duration-300 hover:-translate-y-4 hover:border-green-500 hover:shadow-[0_20px_50px_rgba(34,197,94,0.1)]" data-aos="zoom-in" data-aos-delay="300">
-                    <i class="fa-solid fa-leaf text-green-500 text-4xl mb-6"></i>
-                    <h3 class="font-bold text-2xl mb-3">Estabilidade</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Paciência, lealdade e busca constante por harmonia no time. Gosta de segurança.</p>
-                </div>
-                <div class="group p-8 bg-white rounded-3xl border border-slate-200 transition-all duration-300 hover:-translate-y-4 hover:border-blue-500 hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)]" data-aos="zoom-in" data-aos-delay="400">
-                    <i class="fa-solid fa-check-double text-blue-500 text-4xl mb-6"></i>
-                    <h3 class="font-bold text-2xl mb-3">Conformidade</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Precisão técnica, análise lógica e rigor com a qualidade. Gosta de regras claras.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-32 max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4" data-aos="fade-up">
-            <h2 class="text-4xl font-black text-brand-900">Últimos Insights</h2>
-            <a href="blog.html" class="bg-slate-200 text-slate-800 px-6 py-3 rounded-full font-bold text-sm hover:bg-brand-900 hover:text-white transition">Ver Blog Completo</a>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <article class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition group" data-aos="fade-right">
-                <span class="text-blue-500 font-bold text-xs uppercase tracking-widest">Metodologia</span>
-                <h3 class="text-2xl font-bold mt-4 mb-4 group-hover:text-brand-500 transition">A Ciência por trás do Sucesso Profissional</h3>
-                <p class="text-slate-600 leading-relaxed mb-6">Estudos mostram que 85% do sucesso vem de Soft Skills. O DISC é o mapa da sua mente...</p>
-                <a href="blog.html" class="font-bold text-brand-500 flex items-center gap-2 group">Ler mais <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <article class="bg-white p-8 rounded-[2.5rem] border border-slate-200 hover:shadow-2xl transition group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 text-3xl transition group-hover:bg-blue-600 group-hover:text-white"><i class="fa-solid fa-microscope"></i></div>
+                <h3 class="text-2xl font-black mb-4 group-hover:text-brand-500 transition">O que é DISC?</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">A ciência por trás dos quatro estilos comportamentais dominantes.</p>
+                <a href="blog.html" class="font-bold text-brand-900 flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right"></i></a>
             </article>
-            <article class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition group" data-aos="fade-left">
-                <span class="text-blue-500 font-bold text-xs uppercase tracking-widest">Educação Adaptativa</span>
-                <h3 class="text-2xl font-bold mt-4 mb-4 group-hover:text-brand-500 transition">Como você aprende melhor?</h3>
-                <p class="text-slate-600 leading-relaxed mb-6">Cada perfil aprende de um jeito. Dominantes querem o resultado direto; Influentes aprendem trocando ideias...</p>
-                <a href="blog.html" class="font-bold text-brand-500 flex items-center gap-2 group">Ler mais <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+            <article class="bg-white p-8 rounded-[2.5rem] border border-slate-200 hover:shadow-2xl transition group" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-6 text-3xl transition group-hover:bg-yellow-600 group-hover:text-white"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h3 class="text-2xl font-black mb-4 group-hover:text-brand-500 transition">Aprendizado Adaptativo</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Como o seu perfil influencia o modo como você absorve informações.</p>
+                <a href="blog.html" class="font-bold text-brand-900 flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right"></i></a>
+            </article>
+            <article class="bg-white p-8 rounded-[2.5rem] border border-slate-200 hover:shadow-2xl transition group" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-6 text-3xl transition group-hover:bg-green-600 group-hover:text-white"><i class="fa-solid fa-users-gear"></i></div>
+                <h3 class="text-2xl font-black mb-4 group-hover:text-brand-500 transition">Liderança DISC</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Aprenda a gerir pessoas adaptando sua comunicação.</p>
+                <a href="blog.html" class="font-bold text-brand-900 flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right"></i></a>
             </article>
         </div>
     </section>
 
-    <section class="py-20 bg-brand-900 text-white text-center px-6 overflow-hidden">
-        <div class="max-w-2xl mx-auto" data-aos="flip-up">
-            <h2 class="text-5xl font-black mb-6">Pronto para sua evolução?</h2>
-            <p class="text-slate-400 mb-10 text-lg">Faça o teste gratuito agora, descubra seu perfil dominante e destrave seu verdadeiro potencial de aprendizado.</p>
-            <a href="teste.html" class="inline-flex bg-brand-500 text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-white hover:text-brand-900 transition-all shadow-xl hover:-translate-y-1">
-                Iniciar Avaliação Gratuita
-            </a>
-        </div>
-    </section>
-
-    <footer class="bg-brand-950 py-16 text-white text-center border-t border-slate-800">
-        <div class="animate-logo-glow flex justify-center gap-2 mb-4">
-            <i class="fa-solid fa-brain text-brand-500"></i>
-            <span class="font-black uppercase text-sm tracking-widest">Synthera</span>
-        </div>
-        <p class="text-slate-500 text-sm">&copy; 2026. Projeto Acadêmico de TCC desenvolvido por Matheus Monteiro.</p>
-        <p class="text-slate-600 text-xs mt-2">Tecnologia, Comportamento e Educação Integrados.</p>
+    <footer class="bg-brand-900 py-16 text-center text-slate-500 border-t border-slate-800">
+        <p class="font-black text-white mb-2 uppercase">Synthera</p>
+        <p class="text-xs">&copy; 2026 Matheus Monteiro. Projeto Acadêmico de TCC.</p>
     </footer>
 
     <script>
-        AOS.init({
-            once: true, // A animação acontece apenas uma vez (não repete ao subir a página)
-            mirror: false
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const userId = localStorage.getItem('synthera_user_id');
+        AOS.init({ once: true, duration: 800 });
+        const userId = localStorage.getItem('synthera_user_id');
+        if (userId) { 
             const btn = document.getElementById('nav-auth-btn');
-            if (userId && btn) {
-                btn.href = 'painel.html';
-                btn.textContent = 'Meu Painel';
-            }
-        });
+            btn.href = 'painel.html'; btn.textContent = 'Meu Painel'; 
+        }
     </script>
 </body>
 </html>

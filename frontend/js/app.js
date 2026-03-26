@@ -1,8 +1,4 @@
-// ==========================================
-// SYNTHERA - Lógica de Front-end Oficial (Corrigida)
-// ==========================================
-
-const API_URL = '/api'; // Ajustado para o deploy no Render
+const API_URL = '/api'; // Rota relativa para o Render
 
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname;
@@ -11,29 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (path.includes('relatorio.html')) initReport();
 });
 
-/* ==========================================
-   1. AUTENTICAÇÃO (LOGIN/CADASTRO)
-   ========================================== */
 function initLogin() {
     const authForm = document.getElementById('auth-form');
+    const nameField = document.getElementById('name-field');
     const tabLogin = document.getElementById('tab-login');
     const tabRegister = document.getElementById('tab-register');
-    const nameField = document.getElementById('name-field');
     let isLogin = true;
 
-    tabLogin.onclick = () => { 
-        isLogin = true; 
-        nameField.classList.add('hidden'); 
-        tabLogin.className = "flex-1 pb-3 text-sm font-bold text-brand-500 border-b-2 border-brand-500"; 
-        tabRegister.className = "flex-1 pb-3 text-sm font-bold text-gray-400"; 
-    };
-
-    tabRegister.onclick = () => { 
-        isLogin = false; 
-        nameField.classList.remove('hidden'); 
-        tabRegister.className = "flex-1 pb-3 text-sm font-bold text-brand-500 border-b-2 border-brand-500"; 
-        tabLogin.className = "flex-1 pb-3 text-sm font-bold text-gray-400"; 
-    };
+    tabLogin.onclick = () => { isLogin = true; nameField.classList.add('hidden'); };
+    tabRegister.onclick = () => { isLogin = false; nameField.classList.remove('hidden'); };
 
     authForm.onsubmit = async (e) => {
         e.preventDefault();
@@ -43,26 +25,20 @@ function initLogin() {
             ...(isLogin ? {} : { nome: document.getElementById('nome').value })
         };
         try {
-            const res = await fetch(`${API_URL}${isLogin ? '/login' : '/register'}`, { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify(payload) 
+            const res = await fetch(`${API_URL}${isLogin ? '/login' : '/register'}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
             const data = await res.json();
             if (!res.ok) return alert(data.erro);
-            
             localStorage.setItem('synthera_user_id', data.userId);
             localStorage.setItem('synthera_user_nome', data.nome);
-            window.location.href = 'painel.html'; 
-        } catch { 
-            alert('Erro de conexão com o servidor.'); 
-        }
+            window.location.href = 'painel.html';
+        } catch { alert('Erro de conexão.'); }
     };
 }
 
-/* ==========================================
-   2. QUESTIONÁRIO DISC (30 PERGUNTAS)
-   ========================================== */
 function initTest() {
     const userId = localStorage.getItem('synthera_user_id');
     if (!userId) return window.location.href = 'login.html';
@@ -78,7 +54,7 @@ function initTest() {
         { titulo: "8. Seu ritmo de trabalho ideal é:", opcoes: [{texto: "Acelerado e voltado para ação.", valor: "D"}, {texto: "Dinâmico e interativo.", valor: "I"}, {texto: "Constante e previsível.", valor: "S"}, {texto: "Metódico e detalhista.", valor: "C"}] },
         { titulo: "9. O que mais te irrita nos outros?", opcoes: [{texto: "Lentidão e indecisão.", valor: "D"}, {texto: "Frieza e excesso de formalidade.", valor: "I"}, {texto: "Agressividade e falta de tato.", valor: "S"}, {texto: "Desorganização e erros bobos.", valor: "C"}] },
         { titulo: "10. Qual palavra melhor te descreve?", opcoes: [{texto: "Competitivo.", valor: "D"}, {texto: "Sociável.", valor: "I"}, {texto: "Confiável.", valor: "S"}, {texto: "Analítico.", valor: "C"}] },
-        { titulo: "11. Ao iniciar uma tarefa complexa:", opcoes: [{texto: "Planejo cada detalhe antes.", valor: "C"}, {texto: "Começo logo para testar.", valor: "D"}, {texto: "Troco ideias com o time.", valor: "I"}, {texto: "Pedir orientações claras.", valor: "S"}] },
+        { titulo: "11. Ao iniciar uma tarefa complexa:", opcoes: [{texto: "Planejo cada detalhe antes.", valor: "C"}, {texto: "Começo logo para testar.", valor: "D"}, {texto: "Troco ideias com o time.", valor: "I"}, {texto: "Peço orientações claras.", valor: "S"}] },
         { titulo: "12. Sobre regras e procedimentos:", opcoes: [{texto: "São essenciais para qualidade.", valor: "C"}, {texto: "Questiono se atrasarem metas.", valor: "D"}, {texto: "São flexíveis conforme o caso.", valor: "I"}, {texto: "Dão segurança ao meu agir.", valor: "S"}] },
         { titulo: "13. Ao dar feedback, você é:", opcoes: [{texto: "Direto e focado no erro.", valor: "D"}, {texto: "Positivo e encorajador.", valor: "I"}, {texto: "Suave e cuidadoso.", valor: "S"}, {texto: "Específico com fatos reais.", valor: "C"}] },
         { titulo: "14. Sua área de trabalho é:", opcoes: [{texto: "Funcional e minimalista.", valor: "D"}, {texto: "Colorida e personalizada.", valor: "I"}, {texto: "Aconchegante e organizada.", valor: "S"}, {texto: "Impecável e categorizada.", valor: "C"}] },
@@ -110,10 +86,9 @@ function initTest() {
         document.getElementById('progress-text').textContent = `Pergunta ${atual+1} de 30`;
         document.getElementById('progress-bar').style.width = `${((atual+1)/30)*100}%`;
         const form = document.getElementById('quiz-form');
-        form.innerHTML = p.opcoes.map(o => `<label class="block cursor-pointer fade-in"><input type="radio" name="resposta" value="${o.valor}" class="peer sr-only"><div class="w-full p-4 rounded-xl border-2 border-gray-200 peer-checked:border-brand-500 peer-checked:bg-blue-50 transition-all"><span class="text-gray-700 font-medium">${o.texto}</span></div></label>`).join('');
-        const btn = document.getElementById('btn-proxima');
-        btn.disabled = true;
-        form.onchange = () => btn.disabled = false;
+        form.innerHTML = p.opcoes.map(o => `<label class="block cursor-pointer"><input type="radio" name="resposta" value="${o.valor}" class="peer sr-only"><div class="w-full p-4 rounded-xl border-2 border-slate-200 peer-checked:border-brand-500 peer-checked:bg-blue-50 transition-all"><span>${o.texto}</span></div></label>`).join('');
+        document.getElementById('btn-proxima').disabled = true;
+        form.onchange = () => document.getElementById('btn-proxima').disabled = false;
     };
 
     document.getElementById('btn-proxima').onclick = async () => {
@@ -123,10 +98,10 @@ function initTest() {
         if (++atual < 30) render();
         else {
             const dom = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            const res = await fetch(`${API_URL}/testes`, { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ userId, perfilPredominante: dom, pontuacao: scores, respostasGlobais: respostas }) 
+            const res = await fetch(`${API_URL}/testes`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, perfilPredominante: dom, pontuacao: scores, respostasGlobais: respostas })
             });
             if (res.ok) { 
                 localStorage.setItem('synthera_scores', JSON.stringify(scores)); 
@@ -137,14 +112,11 @@ function initTest() {
     render();
 }
 
-/* ==========================================
-   3. RELATÓRIO DINÂMICO
-   ========================================== */
 function initReport() {
     const scores = JSON.parse(localStorage.getItem('synthera_scores'));
     const nome = localStorage.getItem('synthera_user_nome');
     if (!scores) return window.location.href = 'painel.html';
-
+    
     document.getElementById('user-greeting').textContent = `Olá, ${nome}`;
     const dom = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
     document.getElementById('perfil-letra').textContent = dom;
