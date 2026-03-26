@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (path.includes('painel.html')) initPainel(); 
 });
 
-// --- LÓGICA DE LOGIN ---
+// ==========================================
+// 1. LÓGICA DE LOGIN, CADASTRO E VIA CEP
+// ==========================================
 function initLogin() {
     const authForm = document.getElementById('auth-form');
     if(!authForm) return;
@@ -16,10 +18,18 @@ function initLogin() {
     const authTabs = document.getElementById('auth-tabs');
     const tabLogin = document.getElementById('tab-login');
     const tabRegister = document.getElementById('tab-register');
-    const nameField = document.getElementById('name-field');
+    
+    const registerFields = document.getElementById('register-fields');
+    const termosBox = document.getElementById('termos-box');
+    const senhaHint = document.getElementById('senha-hint');
+    const btnSubmit = document.getElementById('btn-submit');
+    const cepInput = document.getElementById('cep');
+    const cidadeUfInput = document.getElementById('cidade-uf');
     
     let isLogin = true;
     let tipoSelecionado = 'aluno';
+    let cidadeDetectada = '';
+    let estadoDetectado = '';
 
     if(btnGestor) {
         btnGestor.onclick = () => {
@@ -28,8 +38,11 @@ function initLogin() {
             btnGestor.className = "flex-1 py-3 rounded-xl text-sm font-bold bg-white text-blue-600 shadow-sm transition-all";
             btnAluno.className = "flex-1 py-3 rounded-xl text-sm font-bold text-slate-500 transition-all";
             authTabs.classList.add('hidden');
-            nameField.classList.add('hidden');
+            registerFields?.classList.add('hidden');
+            termosBox?.classList.add('hidden');
+            senhaHint?.classList.add('hidden');
             tabLogin.innerHTML = "Acesso Administrativo";
+            btnSubmit.innerHTML = "Entrar como Gestor";
         };
     }
 
@@ -39,42 +52,113 @@ function initLogin() {
             btnAluno.className = "flex-1 py-3 rounded-xl text-sm font-bold bg-white text-blue-600 shadow-sm transition-all";
             btnGestor.className = "flex-1 py-3 rounded-xl text-sm font-bold text-slate-500 transition-all";
             authTabs.classList.remove('hidden');
-            tabLogin.innerHTML = "Entrar";
+            tabLogin.click(); 
         };
     }
 
-    if(tabLogin) tabLogin.onclick = () => { isLogin = true; nameField.classList.add('hidden'); tabLogin.className = "flex-1 pb-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600"; tabRegister.className = "flex-1 pb-3 text-sm font-bold text-slate-400"; };
-    if(tabRegister) tabRegister.onclick = () => { isLogin = false; nameField.classList.remove('hidden'); tabRegister.className = "flex-1 pb-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600"; tabLogin.className = "flex-1 pb-3 text-sm font-bold text-slate-400"; };
+    if(tabLogin) tabLogin.onclick = () => { 
+        isLogin = true; 
+        registerFields?.classList.add('hidden'); 
+        termosBox?.classList.add('hidden');
+        senhaHint?.classList.add('hidden');
+        tabLogin.className = "flex-1 pb-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600"; 
+        tabRegister.className = "flex-1 pb-3 text-sm font-bold text-slate-400"; 
+        btnSubmit.innerHTML = "Acessar Plataforma";
+    };
+    
+    if(tabRegister) tabRegister.onclick = () => { 
+        isLogin = false; 
+        registerFields?.classList.remove('hidden'); 
+        termosBox?.classList.remove('hidden');
+        senhaHint?.classList.remove('hidden');
+        tabRegister.className = "flex-1 pb-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600"; 
+        tabLogin.className = "flex-1 pb-3 text-sm font-bold text-slate-400"; 
+        btnSubmit.innerHTML = "Criar Conta Segura";
+    };
+
+    if(cepInput) {
+        cepInput.addEventListener('blur', async (e) => {
+            let cep = e.target.value.replace(/\D/g, '');
+            if(cep.length === 8) {
+                cidadeUfInput.value = "Buscando localização...";
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+                    if(data.erro) {
+                        cidadeUfInput.value = "CEP não encontrado";
+                    } else {
+                        cidadeDetectada = data.localidade;
+                        estadoDetectado = data.uf;
+                        cidadeUfInput.value = `${cidadeDetectada} - ${estadoDetectado}`;
+                    }
+                } catch(error) {
+                    cidadeUfInput.value = "Erro ao buscar CEP";
+                }
+            }
+        });
+    }
 
     authForm.onsubmit = async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
-        const nome = document.getElementById('nome').value;
+        const payload = { email, senha, tipo: tipoSelecionado };
+
+        if (!isLogin) {
+            const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if(!senhaRegex.test(senha)) {
+                alert("Sua senha é fraca. Ela precisa ter no mínimo 8 caracteres, misturando letras e números.");
+                return;
+            }
+            const termos = document.getElementById('termos').checked;
+            if(!termos) {
+                alert("Você precisa aceitar os Termos de Serviço da LGPD para continuar.");
+                return;
+            }
+            payload.nome = document.getElementById('nome').value;
+            payload.cpf = document.getElementById('cpf').value;
+            payload.cep = cepInput.value;
+            payload.cidade = cidadeDetectada;
+            payload.estado = estadoDetectado;
+            payload.numero = document.getElementById('numero').value;
+            payload.termos = termos;
+        }
+
         const rota = isLogin ? '/api/login' : '/api/register';
         
         try {
+            btnSubmit.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Processando...";
+            btnSubmit.disabled = true;
+
             const res = await fetch(rota, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha, tipo: tipoSelecionado, nome: isLogin ? undefined : nome })
+                body: JSON.stringify(payload)
             });
             const data = await res.json();
-            if (!res.ok) return alert(data.erro || "Erro ao processar solicitação.");
+            
+            if (!res.ok) {
+                alert(data.erro || "Erro ao processar solicitação.");
+                btnSubmit.innerHTML = isLogin ? "Acessar Plataforma" : "Criar Conta Segura";
+                btnSubmit.disabled = false;
+                return;
+            }
             
             localStorage.setItem('synthera_user_id', data.userId);
             localStorage.setItem('synthera_user_tipo', data.tipo);
             localStorage.setItem('synthera_user_nome', data.nome || '');
-            
             window.location.href = data.tipo === 'gestor' ? 'admin.html' : 'teste.html';
         } catch (error) {
             console.error(error);
             alert("Erro ao conectar com o servidor.");
+            btnSubmit.disabled = false;
         }
     };
 }
 
-// --- LÓGICA DO PAINEL GESTOR ---
+// ==========================================
+// 2. LÓGICA DO PAINEL GESTOR (HIGHTEC)
+// ==========================================
 async function initAdmin() {
     if (localStorage.getItem('synthera_user_tipo') !== 'gestor') { window.location.href = 'index.html'; return; }
     try {
@@ -86,24 +170,65 @@ async function initAdmin() {
         document.getElementById('kpi-ativos').textContent = data.ativos;
 
         const container = document.getElementById('chart-container');
-        const cores = { D: { bg: 'bg-red-500', nome: 'Dominância' }, I: { bg: 'bg-yellow-400', nome: 'Influência' }, S: { bg: 'bg-green-500', nome: 'Estabilidade' }, C: { bg: 'bg-blue-500', nome: 'Conformidade' } };
+        const cores = { 
+            D: { bg: 'bg-red-500', nome: 'Dominância (D)' }, 
+            I: { bg: 'bg-yellow-400', nome: 'Influência (I)' }, 
+            S: { bg: 'bg-emerald-500', nome: 'Estabilidade (S)' }, 
+            C: { bg: 'bg-blue-500', nome: 'Conformidade (C)' } 
+        };
         
         container.innerHTML = data.distribuicao.length > 0 ? data.distribuicao.map(p => `
             <div>
-                <div class="flex justify-between text-xs font-bold mb-2 text-slate-600"><span>${cores[p.label]?.nome || p.label} (${p.label})</span><span>${p.value} aluno(s)</span></div>
-                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div class="${cores[p.label]?.bg || 'bg-slate-400'} h-full transition-all" style="width: ${(p.value / data.totalTestes) * 100}%"></div></div>
+                <div class="flex justify-between text-xs font-bold mb-2 text-slate-400"><span>${cores[p.label]?.nome || p.label}</span><span class="text-white">${p.value} log(s)</span></div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="${cores[p.label]?.bg || 'bg-slate-500'} h-full transition-all" style="width: ${(p.value / data.totalTestes) * 100}%"></div></div>
             </div>
-        `).join('') : '<p class="text-sm text-slate-400">Sem dados.</p>';
+        `).join('') : '<p class="text-xs text-slate-500">Sem dados processados.</p>';
+
+        // Preenchendo o Radar Geográfico
+        const mapContainer = document.getElementById('geo-map');
+        const regioes = {};
+        data.ultimosTestes.forEach(t => {
+            if(t.cidade && t.estado) {
+                const key = `${t.cidade} - ${t.estado}`;
+                regioes[key] = (regioes[key] || 0) + 1;
+            }
+        });
+
+        const regioesHtml = Object.keys(regioes).length > 0 ? Object.keys(regioes).map(r => `
+            <div class="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+                <span class="text-sm font-bold text-slate-300">${r}</span>
+                <span class="ml-auto text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded-md">${regioes[r]} hit(s)</span>
+            </div>
+        `).join('') : '<p class="text-xs text-slate-500">Nenhum dado geográfico capturado (CEP não informado).</p>';
+        mapContainer.innerHTML = regioesHtml;
 
         const tabela = document.getElementById('tabela-testes');
         tabela.innerHTML = data.ultimosTestes.length > 0 ? data.ultimosTestes.map(t => {
             const dataF = new Date(t.data_realizacao).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-            return `<tr class="border-b border-slate-50"><td class="py-4 font-bold text-slate-800">${t.nome}</td><td class="py-4"><span class="px-3 py-1 rounded-full text-xs font-black ${cores[t.perfil_predominante]?.bg} text-white">${cores[t.perfil_predominante]?.nome}</span></td><td class="py-4 text-right text-slate-400 text-xs font-bold">${dataF}</td></tr>`;
-        }).join('') : '<tr><td colspan="3" class="py-4 text-center">Aguardando resultados...</td></tr>';
+            const local = (t.cidade && t.estado) ? `${t.cidade} - ${t.estado}` : "Localização Privada";
+            
+            return `
+            <tr class="border-b border-slate-800 last:border-0 hover:bg-slate-800/50 transition">
+                <td class="py-4">
+                    <p class="font-bold text-white">${t.nome}</p>
+                    <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-1"><i class="fa-solid fa-location-crosshairs text-blue-500 mr-1"></i> ${local}</p>
+                </td>
+                <td class="py-4">
+                    <span class="px-3 py-1.5 rounded-md text-[10px] uppercase tracking-widest font-black ${cores[t.perfil_predominante]?.bg || 'bg-slate-700'} text-slate-950 shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+                        ${t.perfil_predominante} - ${cores[t.perfil_predominante]?.nome.split(' ')[0]}
+                    </span>
+                </td>
+                <td class="py-4 text-right text-slate-500 text-xs font-bold font-mono">${dataF}</td>
+            </tr>
+        `}).join('') : '<tr><td colspan="3" class="py-4 text-center text-slate-600 text-sm">Nenhum evento registrado no servidor...</td></tr>';
+
     } catch (error) { console.error(error); }
 }
 
-// --- LÓGICA DO TESTE DISC (30 PERGUNTAS) ---
+// ==========================================
+// 3. LÓGICA DO TESTE DISC (30 PERGUNTAS)
+// ==========================================
 function initTest() {
     const userId = localStorage.getItem('synthera_user_id');
     if (!userId) { window.location.href = 'login.html'; return; }
@@ -212,7 +337,9 @@ function initTest() {
     renderQuestion();
 }
 
-// --- LÓGICA DO PAINEL DO ALUNO (ATUALIZADA PARA O NOVO DESIGN TECH) ---
+// ==========================================
+// 4. LÓGICA DO PAINEL DO ALUNO (HIGHTEC)
+// ==========================================
 function initPainel() {
     const nome = localStorage.getItem('synthera_user_nome');
     const perfil = localStorage.getItem('synthera_resultado_final');
@@ -225,7 +352,6 @@ function initPainel() {
 
     if(nome) document.getElementById('aluno-nome').textContent = nome.split(' ')[0];
 
-    // Matriz de dados com cores TECH
     const perfisDados = {
         'D': {
             titulo: "DOMINÂNCIA (D)",
@@ -233,10 +359,7 @@ function initPainel() {
             forcas: ["<i class='fa-solid fa-bolt text-red-500 mr-2'></i> Resolução Crítica de Problemas", "<i class='fa-solid fa-bolt text-red-500 mr-2'></i> Foco Direcionado a Metas", "<i class='fa-solid fa-bolt text-red-500 mr-2'></i> Gerenciamento de Crises"],
             cor: "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]",
             icone: "fa-fire text-red-400",
-            cursos: [
-                { nome: "Gestão Ágil (Scrum/Kanban)", area: "Gerenciamento" },
-                { nome: "Empreendedorismo Digital", area: "Negócios" }
-            ]
+            cursos: [{ nome: "Gestão Ágil (Scrum/Kanban)", area: "Gerenciamento" }, { nome: "Empreendedorismo Digital", area: "Negócios" }]
         },
         'I': {
             titulo: "INFLUÊNCIA (I)",
@@ -244,10 +367,7 @@ function initPainel() {
             forcas: ["<i class='fa-solid fa-satellite-dish text-yellow-400 mr-2'></i> Comunicação Assertiva", "<i class='fa-solid fa-satellite-dish text-yellow-400 mr-2'></i> Construção de Networking", "<i class='fa-solid fa-satellite-dish text-yellow-400 mr-2'></i> Resolução de Conflitos"],
             cor: "bg-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.5)]",
             icone: "fa-satellite-dish text-yellow-400",
-            cursos: [
-                { nome: "Customer Success (CS)", area: "Relacionamento" },
-                { nome: "Marketing Digital Acionável", area: "Comunicação" }
-            ]
+            cursos: [{ nome: "Customer Success (CS)", area: "Relacionamento" }, { nome: "Marketing Digital Acionável", area: "Comunicação" }]
         },
         'S': {
             titulo: "ESTABILIDADE (S)",
@@ -255,10 +375,7 @@ function initPainel() {
             forcas: ["<i class='fa-solid fa-shield-halved text-emerald-400 mr-2'></i> Operação Consistente", "<i class='fa-solid fa-shield-halved text-emerald-400 mr-2'></i> Escuta Ativa e Suporte", "<i class='fa-solid fa-shield-halved text-emerald-400 mr-2'></i> Gestão de Rotinas"],
             cor: "bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]",
             icone: "fa-shield-halved text-emerald-400",
-            cursos: [
-                { nome: "Suporte Técnico N1/N2", area: "Infraestrutura TI" },
-                { nome: "Assistência Administrativa Avançada", area: "Operações" }
-            ]
+            cursos: [{ nome: "Suporte Técnico N1/N2", area: "Infraestrutura TI" }, { nome: "Assistência Administrativa Avançada", area: "Operações" }]
         },
         'C': {
             titulo: "CONFORMIDADE (C)",
@@ -266,10 +383,7 @@ function initPainel() {
             forcas: ["<i class='fa-solid fa-microchip text-blue-500 mr-2'></i> Análise de Dados Complexos", "<i class='fa-solid fa-microchip text-blue-500 mr-2'></i> Controle de Qualidade (QA)", "<i class='fa-solid fa-microchip text-blue-500 mr-2'></i> Otimização de Processos"],
             cor: "bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]",
             icone: "fa-microchip text-blue-400",
-            cursos: [
-                { nome: "Análise de Dados (SQL/Excel)", area: "Data Science Base" },
-                { nome: "Lógica de Programação", area: "Engenharia de Software" }
-            ]
+            cursos: [{ nome: "Análise de Dados (SQL/Excel)", area: "Data Science Base" }, { nome: "Lógica de Programação", area: "Engenharia de Software" }]
         }
     };
 
@@ -279,10 +393,8 @@ function initPainel() {
     document.getElementById('perfil-desc').textContent = meuPerfil.desc;
     document.getElementById('perfil-icone').innerHTML = `<i class="fa-solid ${meuPerfil.icone}"></i>`;
     document.getElementById('card-color').className = `absolute top-0 left-0 w-full h-1 ${meuPerfil.cor}`;
-    
     document.getElementById('perfil-forcas').innerHTML = meuPerfil.forcas.map(f => `<li>${f}</li>`).join('');
 
-    // Injeta os cursos no grid escuro
     document.getElementById('trilha-cursos').innerHTML = meuPerfil.cursos.map(c => `
         <div class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all cursor-pointer group">
             <span class="text-[10px] font-black uppercase text-slate-500 block mb-2 tracking-widest">${c.area}</span>
