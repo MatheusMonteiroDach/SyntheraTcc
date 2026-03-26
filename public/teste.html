@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synthera | Avaliação DISC</title>
+    <title>Synthera | Avaliação Comportamental</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,9 +13,9 @@
                 extend: {
                     colors: {
                         brand: {
-                            900: '#0f172a',
-                            500: '#3b82f6',
-                            400: '#60a5fa',
+                            900: '#1e293b', // Slate 800 (Mais suave que o preto total)
+                            500: '#60a5fa', // Blue 400 (Azul céu, gera menos ansiedade)
+                            400: '#93c5fd',
                         }
                     }
                 }
@@ -23,33 +23,67 @@
         }
     </script>
     <style>
-        /* Impede o scroll horizontal indesejado e suaviza transições */
-        body { overflow-x: hidden; }
-        .fade-in { animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Gradiente Suave para Fundo Zen */
+        body { 
+            background: radial-gradient(circle at top right, #f0f9ff 0%, #f8fafc 100%); 
+            overflow-x: hidden;
+        }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Efeito de flutuação suave no ícone */
+        .float-zen { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-100">
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-blue-100">
 
-    <header class="bg-white shadow-sm py-3 md:py-4 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="index.html" class="font-black text-lg md:text-2xl tracking-tighter text-brand-900 uppercase">
+    <header class="bg-white/60 backdrop-blur-md shadow-sm py-4 sticky top-0 z-50 border-b border-blue-50">
+        <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-black text-xl tracking-tighter text-slate-400 uppercase">
                 SYNTHERA<span class="text-brand-500">.</span>
             </a>
-            <span class="text-[10px] md:text-sm font-black text-gray-500 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-widest" id="progress-text">
-                Iniciando...
-            </span>
+            <div id="status-container" class="hidden flex items-center gap-3">
+                <span class="text-[10px] md:text-xs font-black text-slate-400 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-widest" id="progress-text">
+                    Iniciando...
+                </span>
+            </div>
         </div>
     </header>
 
-    <div class="w-full bg-slate-200 h-1.5 md:h-2 sticky top-[52px] md:top-[64px] z-40">
-        <div class="bg-brand-500 h-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(59,130,246,0.5)]" id="progress-bar" style="width: 0%;"></div>
+    <div id="bar-container" class="hidden w-full bg-slate-200 h-1.5 sticky top-[60px] z-40">
+        <div class="bg-brand-500 h-full transition-all duration-700 ease-in-out shadow-[0_0_15px_rgba(96,165,250,0.4)]" id="progress-bar" style="width: 0%;"></div>
     </div>
 
-    <main class="flex-grow flex items-center justify-center py-6 md:py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl w-full bg-white p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl shadow-slate-200/60 border border-slate-100 relative overflow-hidden">
+    <main class="flex-grow flex items-center justify-center py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+        
+        <div id="intro-screen" class="max-w-xl w-full bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-blue-900/5 border border-white fade-in text-center">
+            <div class="w-20 h-20 bg-blue-50 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-8 float-zen">
+                <i class="fa-solid fa-wind text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-black text-slate-800 mb-6 tracking-tight">Respire fundo.</h2>
+            <p class="text-slate-500 leading-relaxed mb-8 font-medium">
+                Para um resultado preciso, faça o teste com calma. Não existem escolhas certas ou erradas, apenas o seu jeito natural de ser.
+            </p>
+            <div class="bg-slate-50 p-6 rounded-2xl mb-10 text-left space-y-4">
+                <div class="flex items-center gap-3 text-sm text-slate-600 font-bold">
+                    <i class="fa-solid fa-clock text-brand-500"></i> Leva apenas 5 a 8 minutos.
+                </div>
+                <div class="flex items-center gap-3 text-sm text-slate-600 font-bold">
+                    <i class="fa-solid fa-heart text-brand-500"></i> Seja honesto consigo mesmo.
+                </div>
+                <div class="flex items-center gap-3 text-sm text-slate-600 font-bold">
+                    <i class="fa-solid fa-eye text-brand-500"></i> Preste atenção em cada opção.
+                </div>
+            </div>
+            <button onclick="startQuiz()" class="w-full bg-brand-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-brand-500 transition-all shadow-xl shadow-slate-900/10 active:scale-95">
+                ESTOU PRONTO, VAMOS COMEÇAR
+            </button>
+        </div>
+
+        <div id="quiz-container" class="hidden max-w-2xl w-full bg-white p-6 md:p-12 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl shadow-slate-200/60 border border-white fade-in">
             
-            <div class="min-h-[80px] md:min-h-[100px] flex items-center justify-center mb-8">
+            <div class="min-h-[100px] flex items-center justify-center mb-8">
                 <h2 class="text-xl md:text-3xl font-black text-slate-800 text-center leading-tight tracking-tight select-none" id="question-text">
                     Carregando matriz de dados...
                 </h2>
@@ -63,19 +97,29 @@
                     <i class="fa-solid fa-chevron-left text-xs"></i> Anterior
                 </button>
                 
-                <button type="button" id="btn-proxima" class="ml-auto bg-brand-900 hover:bg-brand-500 text-white font-black py-3.5 md:py-4 px-8 md:px-12 rounded-2xl shadow-xl shadow-brand-900/20 transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-3 text-sm md:text-base">
-                    Continuar <i class="fa-solid fa-chevron-right text-xs"></i>
+                <button type="button" id="btn-proxima" class="ml-auto bg-brand-900 hover:bg-brand-500 text-white font-black py-4 px-10 md:px-12 rounded-2xl shadow-xl shadow-brand-900/20 transition-all hover:-translate-y-0.5 active:scale-95 flex items-center gap-3 text-sm md:text-base">
+                    CONTINUAR <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
             </div>
 
-            <div class="mt-6 text-center">
-                <p class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
-                    <i class="fa-solid fa-shield-halved text-emerald-500/50 mr-1"></i> Ambiente de Avaliação Seguro
+            <div class="mt-8 text-center">
+                <p class="text-[9px] md:text-[10px] text-slate-300 font-bold uppercase tracking-[0.2em]">
+                    <i class="fa-solid fa-shield-halved text-brand-500/30 mr-1"></i> Ambiente de Avaliação Seguro
                 </p>
             </div>
         </div>
     </main>
 
+    <script>
+        // Função para alternar entre o Aviso e o Teste
+        function startQuiz() {
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('bar-container').classList.remove('hidden');
+            document.getElementById('status-container').classList.remove('hidden');
+            // A função initTest() no seu app.js já fará o resto!
+        }
+    </script>
     <script src="js/app.js"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@ function initLogin() {
     let cidadeDetectada = '';
     let estadoDetectado = '';
 
-    // Lógica do Olhinho (Ver Senha) - Ajustado para touch
+    // Lógica do Olhinho (Ver Senha)
     if(toggleSenha && senhaInput) {
         toggleSenha.onclick = (e) => {
             e.preventDefault();
@@ -100,7 +100,7 @@ function initLogin() {
         cepInput.addEventListener('blur', async (e) => {
             let cep = e.target.value.replace(/\D/g, '');
             if(cep.length === 8) {
-                if(cidadeUfInput) cidadeUfInput.value = "Buscando...";
+                if(cidadeUfInput) cidadeUfInput.value = "Buscando localização...";
                 try {
                     const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
                     const data = await res.json();
@@ -126,13 +126,13 @@ function initLogin() {
 
         if (!isLogin) {
             const confirmEmail = document.getElementById('confirm-email')?.value;
-            if (email !== confirmEmail) return alert("Os e-mails não coincidem!");
+            if (email !== confirmEmail) return alert("Os e-mails informados não são idênticos!");
 
             const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-            if(!senhaRegex.test(senha)) return alert("A senha deve ter 8+ caracteres, com letras e números.");
+            if(!senhaRegex.test(senha)) return alert("Sua senha precisa de 8+ caracteres, incluindo letras e números.");
 
             const termos = document.getElementById('termos')?.checked;
-            if(!termos) return alert("Aceite os termos da LGPD.");
+            if(!termos) return alert("Você precisa aceitar os Termos (LGPD) para continuar.");
 
             payload.nome = document.getElementById('nome').value;
             payload.cpf = document.getElementById('cpf').value;
@@ -147,7 +147,7 @@ function initLogin() {
         }
 
         try {
-            btnSubmit.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i>";
+            btnSubmit.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Processando...";
             btnSubmit.disabled = true;
             const res = await fetch(isLogin ? '/api/login' : '/api/register', {
                 method: 'POST',
@@ -155,7 +155,7 @@ function initLogin() {
                 body: JSON.stringify(payload)
             });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.erro || "Erro no servidor");
+            if (!res.ok) throw new Error(data.erro || "Falha na comunicação.");
 
             localStorage.setItem('synthera_user_id', data.userId);
             localStorage.setItem('synthera_user_tipo', data.tipo);
@@ -170,7 +170,7 @@ function initLogin() {
 }
 
 // ==========================================
-// 2. LÓGICA DO PAINEL GESTOR (ROBUSTO)
+// 2. LÓGICA DO PAINEL GESTOR (RADAR)
 // ==========================================
 async function initAdmin() {
     if (localStorage.getItem('synthera_user_tipo') !== 'gestor') { window.location.href = 'login.html'; return; }
@@ -178,20 +178,22 @@ async function initAdmin() {
         const res = await fetch('/api/admin/stats');
         const data = await res.json();
         
-        const ids = ['kpi-alunos', 'kpi-testes', 'kpi-ativos'];
-        ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).textContent = data[id.split('-')[1]] || data.totalAlunos || 0; });
-        // Ajuste específico para o nome da propriedade que vem do back
         if(document.getElementById('kpi-alunos')) document.getElementById('kpi-alunos').textContent = data.totalAlunos;
         if(document.getElementById('kpi-testes')) document.getElementById('kpi-testes').textContent = data.totalTestes;
+        if(document.getElementById('kpi-ativos')) document.getElementById('kpi-ativos').textContent = data.ativos;
 
-        const cores = { D: { bg: 'bg-red-500' }, I: { bg: 'bg-yellow-400' }, S: { bg: 'bg-emerald-500' }, C: { bg: 'bg-blue-500' } };
+        const cores = { D: 'bg-red-500', I: 'bg-yellow-400', S: 'bg-emerald-500', C: 'bg-blue-500' };
         
         const container = document.getElementById('chart-container');
         if(container) {
             container.innerHTML = data.distribuicao.map(p => `
                 <div>
-                    <div class="flex justify-between text-xs font-bold mb-2"><span>Perfil ${p.label}</span><span>${p.value} Alunos</span></div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="${cores[p.label]?.bg || 'bg-slate-500'} h-full transition-all" style="width: ${(p.value / data.totalTestes) * 100}%"></div></div>
+                    <div class="flex justify-between text-[10px] font-black mb-2 uppercase tracking-widest text-slate-500">
+                        <span>Perfil ${p.label}</span><span>${p.value} Logs</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="${cores[p.label] || 'bg-slate-500'} h-full transition-all duration-1000" style="width: ${(p.value / (data.totalTestes || 1)) * 100}%"></div>
+                    </div>
                 </div>
             `).join('');
         }
@@ -199,19 +201,23 @@ async function initAdmin() {
         const mapContainer = document.getElementById('geo-map');
         if(mapContainer) {
             const regioes = {};
-            data.ultimosTestes.forEach(t => { if(t.cidade) { const k = `${t.cidade}-${t.estado}`; regioes[k] = (regioes[k] || 0) + 1; }});
+            data.ultimosTestes.forEach(t => { if(t.cidade) { const k = `${t.cidade} - ${t.estado}`; regioes[k] = (regioes[k] || 0) + 1; }});
             mapContainer.innerHTML = Object.keys(regioes).map(r => `
-                <div class="flex justify-between bg-white/5 p-2 rounded-lg text-xs"><span>${r}</span><span class="text-emerald-400">${regioes[r]} Acessos</span></div>
+                <div class="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+                    <span class="text-xs font-bold text-slate-300">${r}</span>
+                    <span class="ml-auto text-[10px] bg-slate-800 text-slate-500 px-2 py-1 rounded-md font-black">${regioes[r]} HIT(S)</span>
+                </div>
             `).join('');
         }
 
         const tabela = document.getElementById('tabela-testes');
         if(tabela) {
             tabela.innerHTML = data.ultimosTestes.map(t => `
-                <tr class="border-b border-slate-800 text-xs">
-                    <td class="py-4 font-bold text-white">${t.nome}<br><span class="text-[10px] text-slate-500">${t.cidade || 'Privado'}</span></td>
-                    <td class="py-4"><span class="px-2 py-1 rounded bg-slate-700">${t.perfil_predominante}</span></td>
-                    <td class="py-4 text-right">${new Date(t.data_realizacao).toLocaleDateString()}</td>
+                <tr class="border-b border-slate-800 last:border-0 hover:bg-white/5 transition">
+                    <td class="py-4 font-bold text-white text-xs">${t.nome}<br><span class="text-[9px] text-slate-500 uppercase">${t.cidade || 'Privado'}</span></td>
+                    <td class="py-4"><span class="px-2 py-1 rounded-md text-[9px] font-black ${cores[t.perfil_predominante]} text-slate-900">${t.perfil_predominante}</span></td>
+                    <td class="py-4 text-right text-[10px] font-mono text-slate-500">${new Date(t.data_realizacao).toLocaleDateString()}</td>
                 </tr>
             `).join('');
         }
@@ -219,7 +225,7 @@ async function initAdmin() {
 }
 
 // ==========================================
-// 3. LÓGICA DO TESTE DISC (30 PERGUNTAS)
+// 3. LÓGICA DO TESTE DISC (ZEN-TECH)
 // ==========================================
 function initTest() {
     const userId = localStorage.getItem('synthera_user_id');
@@ -271,39 +277,65 @@ function initTest() {
     function renderQuestion() {
         if(!questionText || !quizForm) return;
         const q = questions[currentIndex];
+        
+        // Efeito Suave
+        questionText.classList.remove('fade-in');
+        void questionText.offsetWidth;
+        questionText.classList.add('fade-in');
         questionText.textContent = q.text;
+
         quizForm.innerHTML = q.options.map((opt) => `
-            <label class="block cursor-pointer">
+            <label class="block cursor-pointer group">
                 <input type="radio" name="resposta" value="${opt.value}" class="peer sr-only" ${userAnswers[currentIndex] === opt.value ? 'checked' : ''}>
-                <div class="w-full p-4 rounded-xl border-2 border-slate-200 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
-                    <span class="font-bold text-slate-700">${opt.text}</span>
+                <div class="w-full p-4 rounded-2xl border-2 border-slate-100 bg-white peer-checked:border-brand-500 peer-checked:bg-blue-50 hover:bg-slate-50 transition-all duration-300 shadow-sm group-active:scale-[0.98]">
+                    <span class="font-bold text-slate-600 peer-checked:text-brand-900">${opt.text}</span>
                 </div>
             </label>
         `).join('');
+
         if(progressBar) progressBar.style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
         if(progressText) progressText.textContent = `Pergunta ${currentIndex + 1} de 30`;
         btnVoltar?.classList.toggle('hidden', currentIndex === 0);
     }
 
+    // Gatilho Global para iniciar o teste do aviso
+    window.startQuiz = () => {
+        const intro = document.getElementById('intro-screen');
+        const container = document.getElementById('quiz-container');
+        if(intro && container) {
+            intro.classList.add('hidden');
+            container.classList.remove('hidden');
+            document.getElementById('status-container')?.classList.remove('hidden');
+            document.getElementById('bar-container')?.classList.remove('hidden');
+            renderQuestion();
+        }
+    };
+
     btnProxima?.addEventListener('click', async () => {
         const sel = document.querySelector('input[name="resposta"]:checked');
         if(!sel) return alert("Selecione uma opção.");
         userAnswers[currentIndex] = sel.value;
-        if(currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
-        else {
+        
+        if(currentIndex < questions.length - 1) { 
+            currentIndex++; 
+            renderQuestion(); 
+        } else {
             const scores = { D: 0, I: 0, S: 0, C: 0 };
             userAnswers.forEach(v => scores[v]++);
             let pred = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            
+            btnProxima.disabled = true;
+            btnProxima.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> SALVANDO...";
+
             try {
                 await fetch('/api/testes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId, perfilPredominante: pred, pontuacao: scores }) });
                 localStorage.setItem('synthera_resultado_final', pred);
                 window.location.href = 'painel.html';
-            } catch(e) { alert("Erro ao salvar teste."); }
+            } catch(e) { alert("Erro ao salvar."); btnProxima.disabled = false; }
         }
     });
 
     btnVoltar?.addEventListener('click', () => { if(currentIndex > 0) { currentIndex--; renderQuestion(); } });
-    renderQuestion();
 }
 
 // ==========================================
@@ -317,10 +349,10 @@ function initPainel() {
     if(document.getElementById('aluno-nome')) document.getElementById('aluno-nome').textContent = nome.split(' ')[0];
 
     const dados = {
-        'D': { t: "DOMINÂNCIA (D)", d: "Perfil focado em resultados rápidos.", f: ["Decisão Ágil", "Foco em Metas"], c: "bg-red-500", i: "fa-fire" },
+        'D': { t: "DOMINÂNCIA (D)", d: "Perfil executivo focado em resultados.", f: ["Decisão Ágil", "Foco em Metas"], c: "bg-red-500", i: "fa-fire" },
         'I': { t: "INFLUÊNCIA (I)", d: "Perfil comunicador e persuasivo.", f: ["Networking", "Entusiasmo"], c: "bg-yellow-400", i: "fa-satellite-dish" },
-        'S': { t: "ESTABILIDADE (S)", d: "Perfil paciente e confiável.", f: ["Lealdade", "Rotina"], c: "bg-emerald-500", i: "fa-shield-halved" },
-        'C': { t: "CONFORMIDADE (C)", d: "Perfil analítico e detalhista.", f: ["Precisão", "Lógica"], c: "bg-blue-500", i: "fa-microchip" }
+        'S': { t: "ESTABILIDADE (S)", d: "Perfil paciente e constante.", f: ["Lealdade", "Rotina"], c: "bg-emerald-500", i: "fa-shield-halved" },
+        'C': { t: "CONFORMIDADE (C)", d: "Perfil analítico e técnico.", f: ["Precisão", "Lógica"], c: "bg-blue-500", i: "fa-microchip" }
     };
 
     const meu = dados[perfil];
@@ -328,5 +360,8 @@ function initPainel() {
     if(document.getElementById('perfil-desc')) document.getElementById('perfil-desc').textContent = meu.d;
     if(document.getElementById('card-color')) document.getElementById('card-color').className = `absolute top-0 left-0 w-full h-1 ${meu.c}`;
     if(document.getElementById('perfil-icone')) document.getElementById('perfil-icone').innerHTML = `<i class="fa-solid ${meu.i}"></i>`;
-    if(document.getElementById('perfil-forcas')) document.getElementById('perfil-forcas').innerHTML = meu.f.map(x => `<li>${x}</li>`).join('');
+    if(document.getElementById('perfil-forcas')) document.getElementById('perfil-forcas').innerHTML = meu.f.map(x => `
+        <li class="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+            <i class="fa-solid fa-check-circle text-blue-500"></i> ${x}
+        </li>`).join('');
 }

@@ -8,98 +8,105 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        /* 💡 Otimização: DNA Visual Synthera */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+        @keyframes blob { 0% { transform: translate(0px, 0px) scale(1); } 33% { transform: translate(30px, -50px) scale(1.1); } 66% { transform: translate(-20px, 20px) scale(0.9); } 100% { transform: translate(0px, 0px) scale(1); } }
+        
+        .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+        .animate-blob { animation: blob 10s infinite linear; }
+        .bg-grid-slate { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.04)'%3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E"); }
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
-        .animate-float { animation: float 4s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans overflow-x-hidden selection:bg-blue-100">
+<body class="bg-slate-50 text-slate-900 font-sans overflow-x-hidden selection:bg-blue-200 bg-grid-slate">
     
-    <nav class="bg-white/80 backdrop-blur-lg border-b border-slate-100 p-4 md:p-5 fixed w-full top-0 z-50 transition-all">
+    <nav class="bg-white/80 backdrop-blur-xl border-b border-slate-200/50 p-4 md:p-5 fixed w-full top-0 z-50 transition-all">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-xl font-black italic tracking-tighter text-blue-600 uppercase">SYNTHERA<span class="text-slate-900">.PRO</span></a>
-            <div class="flex gap-4 md:gap-6 items-center">
-                <a href="index.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition hidden md:block">Início</a>
-                <a href="blog.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition hidden md:block">Insights</a>
-                <a href="login.html" class="bg-slate-900 text-white px-4 py-2 md:px-5 md:py-2 rounded-xl text-xs md:text-sm font-bold hover:bg-blue-600 transition-all shadow-lg shadow-slate-900/20">Acessar</a>
+            <a href="index.html" class="text-xl md:text-2xl font-black italic tracking-tighter text-blue-600 uppercase">SYNTHERA<span class="text-slate-900">.PRO</span></a>
+            <div class="flex gap-4 md:gap-8 items-center">
+                <a href="index.html" class="text-xs font-black text-slate-500 hover:text-blue-600 transition hidden md:block uppercase tracking-widest">Início</a>
+                <a href="blog.html" class="text-xs font-black text-slate-500 hover:text-blue-600 transition hidden md:block uppercase tracking-widest">Insights</a>
+                <a href="login.html" class="bg-slate-950 text-white px-5 py-2.5 rounded-2xl text-[10px] md:text-xs font-black hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20 uppercase tracking-widest">Entrar</a>
             </div>
         </div>
     </nav>
 
-    <header class="pt-28 md:pt-40 pb-16 md:pb-20 px-6 max-w-5xl mx-auto text-center animate-fade-up">
-        <div class="inline-block bg-blue-50 text-blue-600 font-black uppercase tracking-widest text-[9px] md:text-[10px] px-4 py-2 rounded-full mb-6 border border-blue-100 animate-float">O Nosso Propósito</div>
-        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-6 md:mb-8 tracking-tighter">
-            Não é só sobre um emprego.<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">É sobre encontrar o seu lugar.</span>
-        </h1>
-        <p class="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
-            O Synthera nasceu para democratizar o acesso a um mercado de trabalho sadio, unindo formação educacional (EJA) ao autoconhecimento comportamental DISC.
-        </p>
+    <header class="relative pt-32 md:pt-48 pb-20 px-6 max-w-5xl mx-auto text-center animate-fade-up">
+        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        
+        <div class="relative z-10">
+            <div class="inline-block bg-blue-600/5 text-blue-600 font-black uppercase tracking-[0.3em] text-[9px] md:text-[10px] px-5 py-2 rounded-full mb-8 border border-blue-600/10 animate-float">O Nosso Propósito</div>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black text-slate-950 leading-[0.95] mb-8 tracking-tighter">
+                Não é apenas um emprego.<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500 italic">É o seu lugar no mundo.</span>
+            </h1>
+            <p class="text-base md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                O Synthera nasceu para democratizar o acesso ao mercado de trabalho, unindo a força da educação básica ao autoconhecimento comportamental.
+            </p>
+        </div>
     </header>
 
-    <section class="max-w-6xl mx-auto px-6 pb-20 md:pb-24">
+    <section class="max-w-6xl mx-auto px-6 pb-20 md:pb-32 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             
-            <div class="bg-white p-8 md:p-10 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/20 hover:-translate-y-2 transition-all duration-300 animate-fade-up delay-100 group relative overflow-hidden flex flex-col">
-                <div class="absolute -right-8 -top-8 text-slate-50 text-7xl md:text-8xl group-hover:text-blue-50 transition-colors z-0"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500 animate-fade-up delay-100 group relative overflow-hidden flex flex-col">
+                <div class="absolute -right-8 -top-8 text-slate-100/50 text-8xl group-hover:text-blue-500/10 transition-colors z-0"><i class="fa-solid fa-graduation-cap"></i></div>
                 <div class="relative z-10">
-                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner"><i class="fa-solid fa-book-open"></i></div>
-                    <h3 class="text-xl md:text-2xl font-black mb-4 text-slate-800">Educação Acessível</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">Fugimos da lógica dos subempregos. Oferecemos suporte para EJA e cursos que o mercado realmente exige hoje.</p>
+                    <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-xl shadow-blue-500/20 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open"></i></div>
+                    <h3 class="text-2xl font-black mb-4 text-slate-950 tracking-tighter uppercase italic">Educação Real</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm font-medium">Fugimos do comum. Oferecemos suporte para EJA e trilhas técnicas desenhadas para o que o mercado exige hoje.</p>
                 </div>
             </div>
 
-            <div class="bg-white p-8 md:p-10 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/20 hover:-translate-y-2 transition-all duration-300 animate-fade-up delay-200 group relative overflow-hidden flex flex-col">
-                <div class="absolute -right-8 -top-8 text-slate-50 text-7xl md:text-8xl group-hover:text-emerald-50 transition-colors z-0"><i class="fa-solid fa-brain"></i></div>
+            <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500 animate-fade-up delay-200 group relative overflow-hidden flex flex-col">
+                <div class="absolute -right-8 -top-8 text-slate-100/50 text-8xl group-hover:text-emerald-500/10 transition-colors z-0"><i class="fa-solid fa-brain"></i></div>
                 <div class="relative z-10">
-                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner"><i class="fa-solid fa-chart-radar"></i></div>
-                    <h3 class="text-xl md:text-2xl font-black mb-4 text-slate-800">Metodologia DISC</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">Mapeamos seu perfil para mostrar seus pontos fortes e as áreas de atuação onde você vai brilhar naturalmente.</p>
+                    <div class="w-16 h-16 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-xl shadow-emerald-500/20 group-hover:scale-110 transition-transform"><i class="fa-solid fa-chart-radar"></i></div>
+                    <h3 class="text-2xl font-black mb-4 text-slate-950 tracking-tighter uppercase italic">DNA DISC</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm font-medium">Mapeamos seu perfil para mostrar suas forças invisíveis e as áreas onde sua performance será natural e fluida.</p>
                 </div>
             </div>
 
-            <div class="bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-2xl hover:-translate-y-2 transition-all duration-300 animate-fade-up delay-300 text-white relative overflow-hidden flex flex-col">
-                <div class="absolute -right-4 -bottom-4 text-white/5 text-7xl md:text-8xl z-0"><i class="fa-solid fa-handshake"></i></div>
+            <div class="bg-slate-950 p-10 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-500 animate-fade-up delay-300 text-white relative overflow-hidden flex flex-col">
+                <div class="absolute -right-4 -bottom-4 text-white/5 text-9xl z-0"><i class="fa-solid fa-handshake"></i></div>
                 <div class="relative z-10">
-                    <div class="w-14 h-14 bg-white/10 text-white rounded-2xl flex items-center justify-center text-2xl mb-6 backdrop-blur-sm"><i class="fa-solid fa-unlock-keyhole"></i></div>
-                    <h3 class="text-xl md:text-2xl font-black mb-4">100% Gratuito</h3>
-                    <p class="text-slate-300 leading-relaxed text-sm">O conhecimento deve ser livre. Nossa plataforma é gratuita para o usuário final, movida por parcerias éticas.</p>
+                    <div class="w-16 h-16 bg-white/10 backdrop-blur-md text-white rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-unlock-keyhole"></i></div>
+                    <h3 class="text-2xl font-black mb-4 tracking-tighter uppercase italic">Acesso Livre</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm font-medium">O conhecimento é um direito. Nossa plataforma é gratuita, movida por um ecossistema ético de parcerias.</p>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <section class="bg-white border-t border-slate-100 py-16 md:py-24">
-        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+    <section class="bg-white border-t border-slate-100 py-20 md:py-32 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-50 rounded-full blur-[120px] -z-10 opacity-50"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16 md:gap-24">
             <div class="w-full md:w-1/2 animate-fade-up">
-                <h2 class="text-2xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">Chega de se sentir perdido no ambiente corporativo.</h2>
-                <p class="text-slate-500 mb-8 text-sm md:text-base leading-relaxed">O Synthera entrega a bússola de como agir. Cruzamos sua formação com seu perfil comportamental para criar uma trilha de evolução real.</p>
-                <ul class="space-y-4 font-bold text-slate-700 text-sm md:text-base">
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i> Sugestões de carreira personalizadas</li>
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i> Pontos cegos de comunicação mapeados</li>
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i> Preparação para desafios reais</li>
+                <h2 class="text-3xl md:text-5xl font-black text-slate-950 mb-8 leading-[0.95] tracking-tighter italic">Pare de andar <br> no escuro.</h2>
+                <p class="text-slate-500 mb-8 text-base md:text-lg leading-relaxed font-medium">O Synthera entrega a bússola. Cruzamos sua formação técnica com seu perfil psicológico para criar uma trilha de evolução blindada.</p>
+                <ul class="space-y-5 font-black text-slate-800 text-sm md:text-base uppercase tracking-wider">
+                    <li class="flex items-center gap-4"><i class="fa-solid fa-square-check text-emerald-500 text-xl"></i> Carreiras Personalizadas</li>
+                    <li class="flex items-center gap-4"><i class="fa-solid fa-square-check text-emerald-500 text-xl"></i> Mapeamento de Pontos Cegos</li>
+                    <li class="flex items-center gap-4"><i class="fa-solid fa-square-check text-emerald-500 text-xl"></i> Inteligência de Mercado</li>
                 </ul>
             </div>
             
             <div class="w-full md:w-1/2 relative animate-fade-up delay-200">
-                <div class="aspect-square bg-gradient-to-tr from-blue-100 to-emerald-50 rounded-[2.5rem] md:rounded-[3rem] p-8 relative overflow-hidden flex items-center justify-center shadow-inner">
-                    <i class="fa-solid fa-rocket text-8xl md:text-9xl text-blue-600/20 animate-float"></i>
-                    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-float whitespace-nowrap" style="animation-delay: 1s;">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                <div class="aspect-square bg-slate-950 rounded-[3rem] md:rounded-[4rem] p-10 relative overflow-hidden flex items-center justify-center shadow-2xl border-[16px] border-white">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/40 to-emerald-500/20"></div>
+                    <i class="fa-solid fa-rocket text-[10rem] md:text-[14rem] text-white/5 animate-float"></i>
+                    
+                    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-xl border border-white/20 p-5 rounded-[2rem] shadow-2xl flex items-center gap-5 animate-float" style="animation-delay: 1.5s;">
+                        <div class="w-12 h-12 bg-emerald-500 text-slate-950 rounded-full flex items-center justify-center text-xl"><i class="fa-solid fa-arrow-trend-up"></i></div>
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase">Status</p>
-                            <p class="text-sm font-bold text-slate-900">Trilha de Evolução Ativa</p>
+                            <p class="text-[10px] font-black text-white/50 uppercase tracking-widest">Performance</p>
+                            <p class="text-sm md:text-base font-black text-white italic">Evolução Sistêmica</p>
                         </div>
                     </div>
                 </div>
@@ -107,12 +114,16 @@
         </div>
     </section>
 
-    <footer class="bg-slate-900 py-16 md:py-20 text-center px-6">
-        <h2 class="text-2xl md:text-3xl font-black text-white mb-6">Pronto para o próximo passo?</h2>
-        <p class="text-slate-400 mb-8 max-w-xl mx-auto text-sm md:text-base">Crie sua conta gratuitamente e comece hoje mesmo a desenhar o seu futuro profissional.</p>
-        <a href="login.html" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-base md:text-lg hover:bg-blue-500 hover:scale-105 transition-all shadow-xl shadow-blue-600/30">
-            Começar Agora Grátis
-        </a>
+    <footer class="bg-slate-950 py-20 md:py-32 text-center px-6 relative overflow-hidden">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-blue-600 rounded-full blur-[180px] opacity-10"></div>
+        
+        <div class="relative z-10">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-8 tracking-tighter uppercase italic">O futuro não espera.</h2>
+            <p class="text-slate-400 mb-12 max-w-xl mx-auto text-sm md:text-lg font-medium">Cadastre-se, mapeie seu perfil e acesse trilhas exclusivas agora.</p>
+            <a href="login.html" class="inline-block bg-white text-slate-950 px-10 py-5 rounded-[2rem] font-black text-lg hover:bg-blue-600 hover:text-white transition-all shadow-2xl shadow-blue-500/20 hover:scale-105">
+                CRIAR MINHA CONTA GRÁTIS
+            </a>
+        </div>
     </footer>
 
 </body>
