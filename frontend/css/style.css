@@ -1,0 +1,57 @@
+/* Importando a fonte Inter do Google Fonts para um visual mais limpo e tech */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Aplicando a fonte globalmente */
+body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* ==========================================
+   CUSTOM SCROLLBAR (Barra de Rolagem Premium)
+   ========================================== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9; /* gray-100 do Tailwind */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* gray-300 do Tailwind */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b82f6; /* brand-500 (Azul Synthera) */
+}
+
+/* ==========================================
+   ANIMAÇÕES GLOBAIS
+   ========================================== */
+
+/* Animação de Fade In para a troca de perguntas no teste.html */
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Esconde elementos globalmente de forma suave (útil para o JS) */
+.hidden-smooth {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    visibility: hidden;
+}

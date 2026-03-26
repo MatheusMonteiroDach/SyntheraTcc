@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Painel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { 950: '#020617', 900: '#0f172a', 500: '#3b82f6' } } } } }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased flex flex-col md:flex-row min-h-screen">
+    <aside class="w-full md:w-64 bg-brand-900 text-white p-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-10"><i class="fa-solid fa-brain text-brand-500 text-xl"></i><span class="font-black text-xl uppercase tracking-tighter">Synthera</span></div>
+        <nav class="flex-grow space-y-2">
+            <a href="#" class="flex items-center gap-3 p-3 bg-brand-500 rounded-xl font-bold"><i class="fa-solid fa-house"></i> Início</a>
+            <a href="relatorio.html" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-xl transition"><i class="fa-solid fa-chart-pie"></i> Meu Perfil</a>
+            <a href="teste.html" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-xl transition"><i class="fa-solid fa-clipboard-list"></i> Refazer Teste</a>
+        </nav>
+        <button id="btn-logout-panel" class="mt-auto flex items-center gap-3 p-3 text-red-400 hover:text-red-300 transition w-full text-left font-bold">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </button>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-12">
+        <header class="mb-10 flex justify-between items-center">
+            <div><h1 class="text-4xl font-black text-brand-900" id="welcome-user">Bem-vindo, Aluno</h1><p class="text-slate-500">Seu portal de acessibilidade e evolução.</p></div>
+            <button class="bg-slate-200 w-12 h-12 rounded-full flex items-center justify-center hover:bg-slate-300" title="Acessibilidade"><i class="fa-solid fa-universal-access text-xl"></i></button>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6">
+                <div id="perfil-icon" class="w-20 h-20 rounded-2xl flex items-center justify-center text-white font-black text-3xl bg-slate-200">?</div>
+                <div><span class="text-slate-400 text-xs font-bold uppercase">Seu Perfil Principal</span><h3 class="text-3xl font-black" id="perfil-nome">Pendente</h3></div>
+            </div>
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <span class="text-slate-400 text-xs font-bold uppercase">Progresso da Trilha de Estudo</span>
+                <div class="mt-4 w-full bg-slate-100 rounded-full h-4"><div class="bg-green-500 h-4 rounded-full" style="width: 15%"></div></div>
+                <p class="text-right text-xs mt-2 font-bold text-slate-500">15% concluído</p>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-brand-900 mb-6">Opções de Estudo Personalizadas</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 flex gap-6 hover:shadow-lg transition group">
+                <div class="w-24 h-24 bg-brand-500/10 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-video text-brand-500 text-3xl"></i></div>
+                <div><h4 class="font-bold text-xl">Liderança DISC</h4><p class="text-sm text-slate-500 mb-4">Aprenda a liderar cada perfil.</p><button class="bg-brand-900 text-white px-5 py-2 rounded-lg text-sm font-bold">Assistir Aula</button></div>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 flex gap-6 hover:shadow-lg transition group">
+                <div class="w-24 h-24 bg-green-500/10 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-headphones text-green-500 text-3xl"></i></div>
+                <div><h4 class="font-bold text-xl">Podcast Comportamental</h4><p class="text-sm text-slate-500 mb-4">Soft skills no dia a dia.</p><button class="bg-slate-100 px-5 py-2 rounded-lg text-sm font-bold">Ouvir Agora</button></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nome = localStorage.getItem('synthera_user_nome') || 'Aluno';
+            const scores = JSON.parse(localStorage.getItem('synthera_scores'));
+            document.getElementById('welcome-user').textContent = `Olá, ${nome}`;
+
+            if (scores) {
+                const dom = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+                const labels = { D: 'Dominância', I: 'Influência', S: 'Estabilidade', C: 'Conformidade' };
+                const colors = { D: 'bg-red-500', I: 'bg-yellow-400', S: 'bg-green-500', C: 'bg-blue-500' };
+                document.getElementById('perfil-nome').textContent = labels[dom];
+                document.getElementById('perfil-icon').textContent = dom;
+                document.getElementById('perfil-icon').className = `w-20 h-20 rounded-2xl flex items-center justify-center text-white font-black text-3xl ${colors[dom]}`;
+            }
+
+            document.getElementById('btn-logout-panel').onclick = () => { localStorage.clear(); window.location.href = 'index.html'; };
+        });
+    </script>
+</body>
+</html>

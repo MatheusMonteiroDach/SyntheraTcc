@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Avaliação DISC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0f172a',
+                            500: '#3b82f6',
+                            400: '#60a5fa',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm py-4">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="index.html" class="font-black text-xl tracking-tighter text-brand-900">
+                SYNTHERA<span class="text-brand-500">.</span>
+            </a>
+            <span class="text-sm font-medium text-gray-500" id="progress-text">Pergunta 1 de 30</span>
+        </div>
+    </header>
+
+    <div class="w-full bg-gray-200 h-2">
+        <div class="bg-brand-500 h-2 transition-all duration-300 ease-in-out" id="progress-bar" style="width: 3.33%;"></div>
+    </div>
+
+    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl w-full bg-white p-8 sm:p-10 rounded-2xl shadow-lg border border-gray-100">
+            
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center" id="question-text">
+                Como você costuma agir sob pressão?
+            </h2>
+
+            <form id="quiz-form" class="space-y-4">
+                
+                <label class="block cursor-pointer">
+                    <input type="radio" name="resposta" value="D" class="peer sr-only">
+                    <div class="w-full p-4 rounded-xl border-2 border-gray-200 peer-checked:border-brand-500 peer-checked:bg-blue-50 hover:bg-gray-50 transition-all">
+                        <span class="text-gray-700 font-medium peer-checked:text-brand-900">Assumo o controle e busco resolver o problema rapidamente.</span>
+                    </div>
+                </label>
+
+                <label class="block cursor-pointer">
+                    <input type="radio" name="resposta" value="I" class="peer sr-only">
+                    <div class="w-full p-4 rounded-xl border-2 border-gray-200 peer-checked:border-brand-500 peer-checked:bg-blue-50 hover:bg-gray-50 transition-all">
+                        <span class="text-gray-700 font-medium peer-checked:text-brand-900">Tento manter o otimismo e engajar a equipe para achar uma saída.</span>
+                    </div>
+                </label>
+
+                <label class="block cursor-pointer">
+                    <input type="radio" name="resposta" value="S" class="peer sr-only">
+                    <div class="w-full p-4 rounded-xl border-2 border-gray-200 peer-checked:border-brand-500 peer-checked:bg-blue-50 hover:bg-gray-50 transition-all">
+                        <span class="text-gray-700 font-medium peer-checked:text-brand-900">Mantenho a calma e sigo o plano estabelecido passo a passo.</span>
+                    </div>
+                </label>
+
+                <label class="block cursor-pointer">
+                    <input type="radio" name="resposta" value="C" class="peer sr-only">
+                    <div class="w-full p-4 rounded-xl border-2 border-gray-200 peer-checked:border-brand-500 peer-checked:bg-blue-50 hover:bg-gray-50 transition-all">
+                        <span class="text-gray-700 font-medium peer-checked:text-brand-900">Analiso todos os dados detalhadamente antes de tomar qualquer decisão.</span>
+                    </div>
+                </label>
+
+            </form>
+
+            <div class="mt-10 flex justify-between items-center">
+                <button type="button" id="btn-voltar" class="text-gray-500 hover:text-gray-700 font-medium px-4 py-2 transition-colors hidden">
+                    ← Voltar
+                </button>
+                <button type="button" id="btn-proxima" class="ml-auto bg-brand-900 hover:bg-brand-500 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    Próxima
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+<script src="js/app.js"></script>
+</body>
+</html>

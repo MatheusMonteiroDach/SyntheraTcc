@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Acesso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0f172a',
+                            500: '#3b82f6',
+                            400: '#60a5fa',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans antialiased min-h-screen flex items-center justify-center">
+
+    <div class="max-w-md w-full mx-auto p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
+        <div class="text-center mb-8">
+            <a href="index.html" class="font-black text-3xl tracking-tighter text-brand-900 cursor-pointer">
+                SYNTHERA<span class="text-brand-500">.</span>
+            </a>
+            <p class="text-sm text-gray-500 mt-2">Acesse seu painel comportamental</p>
+        </div>
+
+        <div class="flex mb-6 border-b border-gray-200">
+            <button class="flex-1 pb-3 text-sm font-bold text-brand-500 border-b-2 border-brand-500 focus:outline-none" id="tab-login">
+                Entrar
+            </button>
+            <button class="flex-1 pb-3 text-sm font-bold text-gray-400 hover:text-gray-600 focus:outline-none transition-colors" id="tab-register">
+                Criar Conta
+            </button>
+        </div>
+
+        <form id="auth-form" class="space-y-5">
+            <div id="name-field" class="hidden">
+                <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                <input type="text" id="nome" placeholder="Digite seu nome" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" required>
+            </div>
+
+            <div>
+                <label for="senha" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                <input type="password" id="senha" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" required>
+            </div>
+
+            <button type="submit" class="w-full bg-brand-900 hover:bg-brand-500 text-white font-bold py-3 px-4 rounded-lg shadow-md transform transition-all hover:-translate-y-0.5 mt-4">
+                Acessar Plataforma
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="index.html" class="text-sm text-gray-500 hover:text-brand-500 transition-colors">← Voltar para a página inicial</a>
+        </div>
+    </div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
