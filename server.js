@@ -5,12 +5,13 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
+
+// 1. Configura a pasta pública de arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
 const db = new sqlite3.Database('./database.db');
 
 db.serialize(() => {
-    // Tabela de Usuários com Nível de Acesso
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
@@ -19,7 +20,6 @@ db.serialize(() => {
         tipo TEXT DEFAULT 'aluno'
     )`);
 
-    // Tabela de Testes Realizados
     db.run(`CREATE TABLE IF NOT EXISTS disc_tests (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,
@@ -29,19 +29,18 @@ db.serialize(() => {
         FOREIGN KEY(user_id) REFERENCES users(id)
     )`);
 
-    // GESTOR (VOCÊ): dachmatheus@gmail.com | 123456
     const adminEmail = 'dachmatheus@gmail.com';
     const hashAdmin = bcrypt.hashSync('123456', 10);
     db.run("INSERT OR REPLACE INTO users (nome, email, senha_hash, tipo) VALUES (?, ?, ?, ?)", 
     ['Matheus Admin', adminEmail, hashAdmin, 'gestor']);
 
-    // ALUNO DE TESTE PARA KPI
     const hashAluno = bcrypt.hashSync('123456', 10);
     db.run("INSERT OR IGNORE INTO users (nome, email, senha_hash, tipo) VALUES (?, ?, ?, ?)", 
     ['João Silva (Teste)', 'aluno@teste.com', hashAluno, 'aluno']);
 });
 
-// LOGIN COM VALIDAÇÃO DE PERFIL (ALUNO VS GESTOR)
+// --- API ROUTES ---
+
 app.post('/api/login', (req, res) => {
     const { email, senha, tipo } = req.body;
     db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
@@ -85,6 +84,11 @@ app.get('/api/admin/stats', (req, res) => {
             });
         });
     });
+});
+
+// 2. ROTA CORINGA: Garante que qualquer acesso direto (ou o principal /) abra o index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
