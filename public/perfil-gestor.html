@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera Admin | Perfil Gestor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen selection:bg-blue-500/30">
+
+    <nav class="border-b border-white/5 bg-slate-950/50 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="admin.html" class="text-slate-400 hover:text-white transition flex items-center gap-2 font-bold text-xs uppercase tracking-widest">
+                <i class="fa-solid fa-chart-line"></i> Dashboard Admin
+            </a>
+            <span class="text-blue-500 font-black italic">SYNTHERA<span class="text-white">.ADMIN</span></span>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto py-12 px-6">
+        
+        <header class="mb-12 flex flex-col md:flex-row items-center gap-10">
+            <div class="relative group">
+                <div class="w-32 h-32 rounded-3xl bg-slate-900 border-2 border-blue-500/50 flex items-center justify-center text-5xl text-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+            </div>
+            
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl md:text-5xl font-black tracking-tighter mb-2" id="display-nome-gestor">Carregando...</h1>
+                <div class="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-full border border-blue-500/20 text-[10px] font-black uppercase tracking-widest">
+                    <i class="fa-solid fa-shield-check"></i> Gestor de Plataforma
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <section class="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-xl">
+                    <h3 class="text-lg font-black mb-8 flex items-center gap-3 italic">
+                        <i class="fa-solid fa-pen-fancy text-blue-500"></i> Configurações de Identidade
+                    </h3>
+                    
+                    <form id="perfil-gestor-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Nome do Gestor</label>
+                                <input type="text" id="gestor-nome" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">WhatsApp Institucional</label>
+                                <input type="text" id="gestor-phone" placeholder="(00) 00000-0000" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Bio / Nota do Gestor</label>
+                            <textarea id="gestor-bio" rows="4" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition-all resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-black px-10 py-4 rounded-2xl transition-all shadow-xl shadow-blue-600/20 active:scale-95">
+                            ATUALIZAR CREDENCIAIS
+                        </button>
+                    </form>
+                </section>
+            </div>
+
+            <aside class="space-y-6">
+                <div class="bg-slate-900 p-8 rounded-[2.5rem] border border-white/5">
+                    <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Acesso Master</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Você possui privilégios para visualizar logs regionais e métricas de comportamento global.</p>
+                </div>
+
+                <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-blue-600/10 to-transparent border border-blue-500/20">
+                    <p class="text-[10px] font-black text-blue-500 uppercase mb-2">Segurança da Conta</p>
+                    <p class="text-xs text-slate-300">Sessão protegida por criptografia AES-256.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

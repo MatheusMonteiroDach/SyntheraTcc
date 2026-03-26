@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Meu Perfil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen selection:bg-blue-500/30">
+
+    <nav class="border-b border-white/5 bg-slate-950/50 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="painel.html" class="text-slate-400 hover:text-white transition flex items-center gap-2 font-bold text-sm uppercase tracking-widest">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+            </a>
+            <span class="text-blue-500 font-black italic">SYNTHERA<span class="text-white">.PRO</span></span>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-12 px-6">
+        
+        <header class="mb-12 flex flex-col md:flex-row items-center gap-8">
+            <div class="relative group">
+                <div class="w-32 h-32 rounded-3xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center text-5xl shadow-2xl shadow-blue-500/20">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                </div>
+                <div class="absolute -bottom-2 -right-2 bg-slate-800 p-2 rounded-xl border border-white/10 text-xs hover:bg-blue-600 cursor-pointer transition-all">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+            </div>
+            
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl md:text-4xl font-black tracking-tighter mb-2" id="display-nome">Carregando...</h1>
+                <p class="text-slate-500 font-medium uppercase tracking-[0.2em] text-xs" id="display-perfil">Aguardando Teste DISC</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="md:col-span-2 space-y-6">
+                <section class="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-xl">
+                    <h3 class="text-lg font-black mb-8 flex items-center gap-3">
+                        <i class="fa-solid fa-address-card text-blue-500"></i> Dados Pessoais
+                    </h3>
+                    
+                    <form id="perfil-form" class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Nome Completo</label>
+                                <input type="text" id="perfil-nome" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">WhatsApp / Celular</label>
+                                <input type="text" id="perfil-phone" placeholder="(00) 00000-0000" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Bio / Resumo Profissional</label>
+                            <textarea id="perfil-bio" rows="4" placeholder="Conte um pouco sobre suas ambições..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition-all resize-none"></textarea>
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-black px-8 py-4 rounded-2xl transition-all shadow-xl shadow-blue-600/20 active:scale-95">
+                                SALVAR ALTERAÇÕES
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <div class="space-y-6">
+                <section class="bg-slate-900 p-8 rounded-[2.5rem] border border-white/5">
+                    <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Segurança</h4>
+                    <p class="text-xs text-slate-400 mb-6">Seus dados estão protegidos sob a criptografia Synthera v2.0.</p>
+                    <button class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-xl text-xs font-bold transition-all">
+                        ALTERAR SENHA
+                    </button>
+                </section>
+
+                <div class="p-6 border border-emerald-500/20 bg-emerald-500/5 rounded-[2rem] text-center">
+                    <i class="fa-solid fa-shield-halved text-emerald-500 text-2xl mb-4"></i>
+                    <p class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">LGPD Ativa</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
