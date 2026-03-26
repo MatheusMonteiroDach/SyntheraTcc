@@ -4,121 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synthera | Artigo</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Ajuste para imagens e blocos injetados via JS não quebrarem o layout */
+        #post-content img { max-width: 100%; height: auto; border-radius: 1rem; }
+        #post-content ul { list-style-type: disc; padding-left: 1.5rem; }
+    </style>
 </head>
-<body class="bg-white text-slate-900 antialiased">
+<body class="bg-white text-slate-900 antialiased selection:bg-blue-100">
     
-    <nav class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-100 p-5 z-50">
-        <div class="max-w-3xl mx-auto flex justify-between items-center">
-            <a href="blog.html" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 font-bold transition">
-                <i class="fa-solid fa-arrow-left"></i> Voltar aos Artigos
+    <nav class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-100 p-4 md:p-5 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <a href="blog.html" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 font-bold transition text-xs md:text-sm">
+                <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Voltar aos Artigos</span><span class="sm:hidden">Voltar</span>
             </a>
-            <div class="flex items-center gap-2 text-slate-900 font-black italic">
-                SYNTHERA<span class="text-blue-600">.ACADEMY</span>
+            <div class="flex items-center gap-2 text-slate-900 font-black italic text-sm md:text-base tracking-tighter uppercase">
+                SYNTHERA<span class="text-blue-600">.Academy</span>
             </div>
         </div>
     </nav>
 
-    <header class="max-w-3xl mx-auto pt-20 pb-10 px-6 border-b border-slate-50">
-        <span id="post-category" class="text-blue-600 font-black text-xs uppercase tracking-widest mb-4 block">Carregando...</span>
-        <h1 id="post-title" class="text-4xl md:text-5xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tighter">Aguarde...</h1>
-        <div class="flex items-center gap-4 text-slate-500 text-sm font-bold">
-            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600"><i class="fa-solid fa-user-pen"></i></div>
+    <header class="max-w-3xl mx-auto pt-12 md:pt-20 pb-8 md:pb-10 px-6 border-b border-slate-50">
+        <span id="post-category" class="text-blue-600 font-black text-[10px] md:text-xs uppercase tracking-widest mb-4 block bg-blue-50 w-fit px-3 py-1 rounded-full">Carregando...</span>
+        <h1 id="post-title" class="text-3xl md:text-5xl font-black text-slate-900 leading-[1.15] mb-6 md:mb-8 tracking-tighter break-words">Aguarde...</h1>
+        
+        <div class="flex items-center gap-4 text-slate-500 text-xs md:text-sm font-bold">
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shrink-0">
+                <i class="fa-solid fa-user-pen"></i>
+            </div>
             <div>
                 <p class="text-slate-900">Equipe Synthera</p>
-                <p>Conteúdo Exclusivo</p>
+                <p class="font-medium opacity-70">Conteúdo Acadêmico Exclusivo</p>
             </div>
         </div>
     </header>
 
-    <article id="post-content" class="max-w-3xl mx-auto py-12 px-6 prose prose-lg prose-slate text-slate-600 leading-relaxed pb-32">
+    <article id="post-content" class="max-w-3xl mx-auto py-10 md:py-12 px-6 prose prose-slate text-slate-600 leading-relaxed pb-24 md:pb-32 text-base md:text-lg">
         </article>
 
+    <footer class="max-w-3xl mx-auto px-6 pb-20 text-center border-t border-slate-50 pt-10">
+        <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">&copy; 2026 Synthera Project</p>
+    </footer>
+
     <script>
-        // O Banco de Dados Completo dos Artigos
         const postDatabase = {
             'o-que-e-disc': {
                 category: "Metodologia",
                 title: "O que é a Metodologia DISC e por que ela é o padrão ouro?",
                 content: `
-                    <p class="mb-6 font-bold text-xl text-slate-800">Se você já se perguntou por que tem facilidade em se comunicar com algumas pessoas e enfrenta atritos constantes com outras, a resposta provavelmente está na metodologia DISC.</p>
-                    <p class="mb-6">Desenvolvida na década de 1920 pelo psicólogo de Harvard, Dr. William Moulton Marston, a teoria DISC não mede inteligência (QI) ou habilidades técnicas. Ela mapeia como você reage aos desafios, influencia pessoas, responde ao ritmo do ambiente e lida com regras.</p>
-                    <h3 class="text-2xl font-black text-slate-900 mt-8 mb-4">Os quatro fatores são:</h3>
-                    <ul class="list-disc pl-6 space-y-4 mb-8">
-                        <li><strong class="text-slate-900">Dominância (D):</strong> Focados em resultados. Lidam com problemas de forma rápida e assertiva.</li>
-                        <li><strong class="text-slate-900">Influência (I):</strong> Comunicativos e persuasivos. O foco está nas relações e no engajamento.</li>
-                        <li><strong class="text-slate-900">Estabilidade (S):</strong> Pacientes e previsíveis. Valorizam a segurança e um ritmo de trabalho constante.</li>
-                        <li><strong class="text-slate-900">Conformidade (C):</strong> Analíticos e lógicos. Tomam decisões baseadas em dados e fatos rigorosos.</li>
+                    <p class="mb-6 font-bold text-xl text-slate-800 leading-snug">Se você já se perguntou por que tem facilidade em se comunicar com algumas pessoas e enfrenta atritos constantes com outras, a resposta provavelmente está na metodologia DISC.</p>
+                    <p class="mb-6">Desenvolvida na década de 1920 pelo psicólogo Dr. William Moulton Marston, a teoria DISC mapeia como reagimos aos desafios e influenciamos o ambiente.</p>
+                    <h3 class="text-2xl font-black text-slate-900 mt-8 mb-4">Os quatro fatores fundamentais:</h3>
+                    <ul class="space-y-4 mb-8">
+                        <li><strong class="text-slate-900">Dominância (D):</strong> Foco em resultados e rapidez na resolução de problemas.</li>
+                        <li><strong class="text-slate-900">Influência (I):</strong> Foco em pessoas, persuasão e engajamento social.</li>
+                        <li><strong class="text-slate-900">Estabilidade (S):</strong> Foco em paciência, constância e segurança.</li>
+                        <li><strong class="text-slate-900">Conformidade (C):</strong> Foco em dados, lógica e precisão técnica.</li>
                     </ul>
-                    <p class="mb-6 border-l-4 border-blue-500 pl-4 italic text-slate-700">O Synthera utiliza essa base científica para criar uma radiografia comportamental, permitindo que cada usuário entenda seu 'modo de operação' e potencialize seus resultados.</p>
+                    <p class="p-6 bg-blue-50 rounded-2xl border border-blue-100 italic text-slate-700 font-medium">O Synthera utiliza essa base científica para criar sua radiografia comportamental, permitindo potencializar seus resultados reais no mercado de trabalho.</p>
                 `
             },
             'educacao-adaptativa': {
                 category: "Aprendizado",
                 title: "Educação Adaptativa: Como cada perfil absorve conhecimento?",
                 content: `
-                    <p class="mb-6 font-bold text-xl text-slate-800">A educação tradicional comete um erro crítico: tratar todos os alunos da mesma forma. O segredo do engajamento está na Educação Adaptativa baseada no perfil comportamental.</p>
-                    <p class="mb-6">No Synthera, entendemos que o formato da entrega do conteúdo é tão importante quanto o conteúdo em si.</p>
-                    <ul class="space-y-6 mb-8 mt-6">
-                        <li class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                            <h4 class="font-black text-lg text-slate-900 mb-2">O Aluno Dominante (D)</h4>
-                            <p>Odeia aulas longas. Aprende melhor com desafios, gamificação e aplicação prática imediata.</p>
-                        </li>
-                        <li class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                            <h4 class="font-black text-lg text-slate-900 mb-2">O Aluno Influente (I)</h4>
-                            <p>Precisa de estímulo social. Aprende melhor com grupos de estudo, debates e troca de ideias.</p>
-                        </li>
-                        <li class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                            <h4 class="font-black text-lg text-slate-900 mb-2">O Aluno Estável (S)</h4>
-                            <p>Precisa de conforto e rotina. Aprende melhor com um passo a passo bem estruturado e tutoriais detalhados sem pressão extrema.</p>
-                        </li>
-                        <li class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                            <h4 class="font-black text-lg text-slate-900 mb-2">O Aluno Conforme (C)</h4>
-                            <p>É o cético analítico. Aprende melhor com artigos científicos, manuais técnicos, dados e estatísticas provadas.</p>
-                        </li>
-                    </ul>
-                    <p class="font-bold text-blue-600 text-center text-xl mt-8">O objetivo não é rotular o aluno, mas sim entregar as ferramentas certas para que ele atinja seu potencial máximo no menor tempo possível.</p>
+                    <p class="mb-6 font-bold text-xl text-slate-800">Tratar todos os alunos da mesma forma é um erro estratégico. O segredo está no formato da entrega.</p>
+                    <div class="grid grid-cols-1 gap-4 mt-6 mb-8 text-sm md:text-base">
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h4 class="font-black text-slate-900 mb-1">O Aluno Dominante (D)</h4>
+                            <p>Aprende com desafios diretos e aplicação prática imediata.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h4 class="font-black text-slate-900 mb-1">O Aluno Influente (I)</h4>
+                            <p>Aprende com estímulo social, debates e troca de ideias em grupo.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h4 class="font-black text-slate-900 mb-1">O Aluno Estável (S)</h4>
+                            <p>Aprende com rotina estruturada e guias passo a passo claros.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h4 class="font-black text-slate-900 mb-1">O Aluno Conforme (C)</h4>
+                            <p>Aprende com manuais técnicos, dados e evidências comprovadas.</p>
+                        </div>
+                    </div>
                 `
             },
             'gestao-de-projetos': {
                 category: "Gestão e Liderança",
                 title: "O impacto do DISC na gestão de projetos e equipes",
                 content: `
-                    <p class="mb-6 font-bold text-xl text-slate-800">Contrata-se pelo currículo, demite-se pelo comportamento. Essa é a máxima do mercado corporativo atual.</p>
-                    <p class="mb-6">Quando um gestor de projetos analisa o dashboard do Synthera e vê o mapeamento DISC da sua equipe, ele deixa de atirar no escuro e passa a jogar xadrez estratégico para garantir o sucesso das entregas. O impacto ocorre em três frentes:</p>
-                    <div class="space-y-6 mt-8 mb-8">
-                        <div>
-                            <h4 class="font-black text-lg text-slate-900"><i class="fa-solid fa-crosshairs text-blue-500 mr-2"></i> 1. Alocação de Tarefas</h4>
-                            <p class="text-slate-600 mt-2">O DISC garante a pessoa certa na cadeira certa. Colocar um perfil 'Influente' para auditar escopos técnicos o dia todo é gerar erros. Colocar um perfil 'Conforme' para animar uma reunião de brainstorming de horas pode gerar exaustão.</p>
-                        </div>
-                        <div>
-                            <h4 class="font-black text-lg text-slate-900"><i class="fa-solid fa-handshake-angle text-blue-500 mr-2"></i> 2. Redução de Conflitos</h4>
-                            <p class="text-slate-600 mt-2">Muitos atritos em projetos ocorrem por falta de compreensão. O 'D' acha o 'S' muito lento; o 'S' acha o 'D' muito agressivo. Entender os perfis aumenta a empatia do time.</p>
-                        </div>
-                        <div>
-                            <h4 class="font-black text-lg text-slate-900"><i class="fa-solid fa-seedling text-blue-500 mr-2"></i> 3. Retenção de Talentos</h4>
-                            <p class="text-slate-600 mt-2">Líderes que adaptam sua comunicação e forma de dar feedback de acordo com o perfil do colaborador geram um ambiente onde as fortalezas individuais são respeitadas.</p>
-                        </div>
-                    </div>
-                    <p class="p-6 bg-blue-50 rounded-2xl text-blue-900 font-bold border border-blue-100">Ter esses dados na ponta dos dedos transforma grupos de pessoas em verdadeiras equipes de alta performance.</p>
+                    <p class="mb-6 font-bold text-xl text-slate-800">Contrata-se pelo currículo, demite-se pelo comportamento. Entenda como o DISC muda o jogo da liderança.</p>
+                    <p class="mb-6">Um gestor estratégico utiliza a análise comportamental para:</p>
+                    <ul class="space-y-4 mb-8">
+                        <li><strong>1. Alocação Inteligente:</strong> A pessoa certa na tarefa certa.</li>
+                        <li><strong>2. Redução de Conflitos:</strong> Aumento da empatia e compreensão do ritmo do outro.</li>
+                        <li><strong>3. Retenção de Talentos:</strong> Feedback adaptado ao 'modo de operação' de cada um.</li>
+                    </ul>
+                    <p class="font-bold text-blue-600 text-lg">O Synthera entrega os dados; você entrega a performance.</p>
                 `
             }
         };
 
-        // Lógica de injeção na tela
         const params = new URLSearchParams(window.location.search);
-        const postId = params.get('id') || 'o-que-e-disc';
+        const postId = params.get('id');
         const post = postDatabase[postId];
 
+        const titleEl = document.getElementById('post-title');
+        const categoryEl = document.getElementById('post-category');
+        const contentEl = document.getElementById('post-content');
+
         if(post) {
-            document.getElementById('post-category').textContent = post.category;
-            document.getElementById('post-title').textContent = post.title;
-            document.getElementById('post-content').innerHTML = post.content;
+            categoryEl.textContent = post.category;
+            titleEl.textContent = post.title;
+            contentEl.innerHTML = post.content;
             document.title = `Synthera | ${post.title}`;
         } else {
-            document.getElementById('post-title').textContent = "Artigo não encontrado";
-            document.getElementById('post-content').innerHTML = "<p>Desculpe, o artigo que você procura não existe ou foi removido da plataforma.</p>";
+            titleEl.textContent = "Artigo não localizado";
+            categoryEl.classList.add('hidden');
+            contentEl.innerHTML = `
+                <div class="text-center py-10">
+                    <i class="fa-solid fa-circle-exclamation text-4xl text-slate-200 mb-4 block"></i>
+                    <p class="mb-6">O conteúdo solicitado não existe nesta base de dados.</p>
+                    <a href="blog.html" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-all">Voltar ao Blog</a>
+                </div>`;
         }
     </script>
 </body>

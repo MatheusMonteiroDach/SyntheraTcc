@@ -8,74 +8,82 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-950 text-slate-300 font-sans flex h-screen overflow-hidden selection:bg-blue-500/30">
+<body class="bg-slate-950 text-slate-300 font-sans flex flex-col md:flex-row md:h-screen overflow-x-hidden selection:bg-blue-500/30">
     
-    <aside class="w-20 md:w-72 bg-slate-900 border-r border-slate-800 p-6 flex flex-col transition-all z-20">
-        <div class="flex items-center gap-3 mb-12">
-            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black"><i class="fa-solid fa-satellite-dish"></i></div>
-            <h2 class="hidden md:block text-2xl font-black tracking-tighter italic text-white">SYNTHERA<span class="text-blue-500">.</span></h2>
+    <aside class="w-full md:w-64 lg:w-72 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 p-4 md:p-6 flex md:flex-col items-center md:items-stretch justify-between md:justify-start z-20">
+        <div class="flex items-center gap-3 md:mb-12">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                <i class="fa-solid fa-satellite-dish text-xs"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-black tracking-tighter italic text-white">SYNTHERA<span class="text-blue-500">.</span></h2>
         </div>
         
-        <nav class="space-y-4 flex-grow">
-            <a href="#" class="bg-blue-600/10 text-blue-500 border border-blue-500/20 p-4 rounded-xl flex items-center justify-center md:justify-start gap-3 font-bold shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)] transition-all">
-                <i class="fa-solid fa-chart-line"></i> <span class="hidden md:block">Visão Estratégica</span>
+        <nav class="hidden md:flex flex-col space-y-4 flex-grow">
+            <a href="#" class="bg-blue-600/10 text-blue-500 border border-blue-500/20 p-4 rounded-xl flex items-center gap-3 font-bold shadow-lg transition-all">
+                <i class="fa-solid fa-chart-line"></i> <span>Visão Estratégica</span>
             </a>
-            <a href="index.html" class="p-4 rounded-xl flex items-center justify-center md:justify-start gap-3 hover:bg-slate-800 transition text-slate-500 hover:text-slate-300">
-                <i class="fa-solid fa-globe"></i> <span class="hidden md:block">Portal Público</span>
+            <a href="index.html" class="p-4 rounded-xl flex items-center gap-3 hover:bg-slate-800 transition text-slate-500 hover:text-slate-300">
+                <i class="fa-solid fa-globe"></i> <span>Portal Público</span>
             </a>
         </nav>
         
-        <div class="mt-auto pt-6 border-t border-slate-800">
-            <div class="hidden md:flex items-center gap-3 mb-4 px-2">
-                <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="mt-auto pt-6 border-t border-slate-800 hidden md:block">
+            <div class="flex items-center gap-3 mb-4 px-2">
+                <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-500">Acesso Nível Superior</p>
+                    <p class="text-[10px] font-black text-slate-500 uppercase">Nível Superior</p>
                     <p class="text-sm font-black text-white">Gestor Master</p>
                 </div>
             </div>
-            <button onclick="localStorage.clear(); window.location.href='login.html'" class="w-full text-slate-500 hover:text-red-400 p-4 font-bold transition flex items-center justify-center md:justify-start gap-3 bg-slate-900 hover:bg-red-500/10 rounded-xl">
-                <i class="fa-solid fa-power-off"></i> <span class="hidden md:block">Encerrar Sessão</span>
+            <button onclick="localStorage.clear(); window.location.href='login.html'" class="w-full text-slate-500 hover:text-red-400 p-4 font-bold transition flex items-center gap-3 bg-slate-900/50 hover:bg-red-500/10 rounded-xl">
+                <i class="fa-solid fa-power-off"></i> <span>Encerrar Sessão</span>
             </button>
         </div>
+
+        <button onclick="localStorage.clear(); window.location.href='login.html'" class="md:hidden text-slate-500 p-2 text-xl">
+            <i class="fa-solid fa-power-off"></i>
+        </button>
     </aside>
 
-    <main class="flex-grow p-6 md:p-10 overflow-y-auto relative">
-        <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
+    <main class="flex-grow p-4 md:p-10 overflow-y-auto relative">
+        <div class="absolute top-[-10%] right-[-5%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-600/5 rounded-full blur-[100px] md:blur-[150px] -z-10 pointer-events-none"></div>
 
-        <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <header class="mb-8 md:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-                <h1 class="text-3xl font-black text-white">Dashboard Estratégico</h1>
-                <p class="text-slate-500 font-medium text-sm mt-1 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Monitoramento de Engajamento e Perfis
+                <h1 class="text-2xl md:text-3xl font-black text-white">Dashboard Estratégico</h1>
+                <p class="text-slate-500 font-medium text-xs md:text-sm mt-1 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Monitoramento em Tempo Real
                 </p>
             </div>
-            <div class="bg-white/5 border border-white/10 px-5 py-2 rounded-lg flex items-center gap-3 backdrop-blur-md">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Status do Sistema</span>
-                <span class="text-blue-400 font-black text-sm"><i class="fa-solid fa-check-circle mr-1"></i> ONLINE</span>
+            <div class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg flex items-center gap-3 backdrop-blur-md">
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</span>
+                <span class="text-blue-400 font-black text-xs uppercase"><i class="fa-solid fa-check-circle mr-1"></i> Online</span>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-lg flex items-center justify-between group hover:border-blue-500/50 transition-colors">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
+            <div class="bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-lg flex items-center justify-between group hover:border-blue-500/50 transition-all">
                 <div>
-                    <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Base de Alunos (LGPD OK)</span>
-                    <h2 class="text-4xl font-black mt-1 text-white" id="kpi-alunos">0</h2>
+                    <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Base de Alunos</span>
+                    <h2 class="text-3xl md:text-4xl font-black mt-1 text-white" id="kpi-alunos">0</h2>
                 </div>
-                <div class="w-14 h-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-blue-500 text-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-users"></i></div>
+                <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-blue-500 text-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-users"></i></div>
             </div>
 
-            <div class="bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-lg flex items-center justify-between group hover:border-emerald-500/50 transition-colors">
+            <div class="bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-lg flex items-center justify-between group hover:border-emerald-500/50 transition-all">
                 <div>
                     <span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Testes Concluídos</span>
-                    <h2 class="text-4xl font-black mt-1 text-white" id="kpi-testes">0</h2>
+                    <h2 class="text-3xl md:text-4xl font-black mt-1 text-white" id="kpi-testes">0</h2>
                 </div>
-                <div class="w-14 h-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-emerald-500 text-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-microscope"></i></div>
+                <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-emerald-500 text-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-microscope"></i></div>
             </div>
 
-            <div class="bg-blue-600 p-6 rounded-3xl shadow-[0_0_30px_-5px_rgba(59,130,246,0.4)] flex items-center justify-between text-white relative overflow-hidden">
+            <div class="bg-blue-600 p-6 rounded-3xl shadow-[0_0_30px_-5px_rgba(59,130,246,0.4)] flex items-center justify-between text-white relative overflow-hidden sm:col-span-2 lg:col-span-1">
                 <div class="relative z-10">
-                    <span class="text-blue-200 text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-white animate-pulse"></div> Tráfego Ativo</span>
-                    <h2 class="text-4xl font-black mt-1" id="kpi-ativos">0</h2>
+                    <span class="text-blue-100 text-[10px] font-black uppercase tracking-widest flex items-center gap-2">Tráfego Ativo</span>
+                    <h2 class="text-3xl md:text-4xl font-black mt-1" id="kpi-ativos">0</h2>
                 </div>
                 <i class="fa-solid fa-chart-network text-6xl text-white/10 absolute -right-4 -bottom-4 z-0"></i>
             </div>
@@ -84,40 +92,36 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             <div class="lg:col-span-1 flex flex-col gap-6">
-                <div class="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-lg">
+                <div class="bg-white/5 backdrop-blur-xl p-6 md:p-8 rounded-3xl border border-white/10 shadow-lg">
                     <h3 class="text-lg font-black text-white mb-6 flex items-center gap-2"><i class="fa-solid fa-chart-pie text-blue-500"></i> Mapeamento DISC</h3>
-                    <div id="chart-container" class="space-y-5">
-                        </div>
+                    <div id="chart-container" class="space-y-5"></div>
                 </div>
 
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl flex-grow relative overflow-hidden">
-                    <i class="fa-solid fa-map-location-dot absolute right-[-20px] bottom-[-20px] text-8xl text-slate-800/50 z-0"></i>
+                <div class="bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl flex-grow relative overflow-hidden">
+                    <i class="fa-solid fa-map-location-dot absolute right-[-10%] bottom-[-10%] text-7xl md:text-8xl text-slate-800/50 z-0"></i>
                     <div class="relative z-10">
-                        <h3 class="text-lg font-black text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-radar text-emerald-500 fa-spin-pulse"></i> Radar de Regiões</h3>
-                        <p class="text-xs text-slate-400 mb-6">Zonas de maior densidade de acesso baseadas nos dados de CEP e LGPD.</p>
-                        <div id="geo-map" class="space-y-3">
-                            </div>
+                        <h3 class="text-lg font-black text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-radar text-emerald-500 fa-spin-pulse text-sm"></i> Radar Regional</h3>
+                        <div id="geo-map" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-lg flex flex-col">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-black text-white flex items-center gap-2"><i class="fa-solid fa-database text-blue-500"></i> Logs Recentes de Avaliação</h3>
-                    <span class="text-xs font-bold text-slate-500 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">Auto-Refresh Ativo</span>
+            <div class="lg:col-span-2 bg-white/5 backdrop-blur-xl p-6 md:p-8 rounded-3xl border border-white/10 shadow-lg flex flex-col overflow-hidden">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <h3 class="text-lg font-black text-white flex items-center gap-2"><i class="fa-solid fa-database text-blue-500"></i> Logs Recentes</h3>
+                    <span class="text-[10px] font-bold text-slate-500 bg-slate-900 px-3 py-1 rounded-full border border-slate-800 uppercase tracking-widest italic">Sync Ativo</span>
                 </div>
                 
-                <div class="overflow-x-auto flex-grow">
-                    <table class="w-full text-left border-collapse">
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse min-w-[500px]">
                         <thead>
                             <tr class="border-b border-slate-800 text-slate-500 text-[10px] uppercase tracking-widest">
-                                <th class="pb-4 font-black">Operador / Região</th>
+                                <th class="pb-4 font-black">Operador / Local</th>
                                 <th class="pb-4 font-black">Matriz DISC</th>
                                 <th class="pb-4 font-black text-right">Timestamp</th>
                             </tr>
                         </thead>
-                        <tbody id="tabela-testes" class="text-sm">
-                            </tbody>
+                        <tbody id="tabela-testes" class="text-sm"></tbody>
                     </table>
                 </div>
             </div>

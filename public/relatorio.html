@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synthera | Seu Relatório DISC</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -22,89 +23,101 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-100">
 
-    <nav class="bg-white shadow-sm w-full z-10">
+    <nav class="bg-white shadow-sm w-full z-10 sticky top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="font-black text-2xl tracking-tighter text-brand-900">
+                <a href="index.html" class="font-black text-xl md:text-2xl tracking-tighter text-brand-900">
                     SYNTHERA<span class="text-brand-500">.</span>
                 </a>
-                <div class="flex items-center space-x-4">
-                    <span class="text-sm font-medium text-gray-600 hidden sm:block" id="user-greeting">Olá, Usuário</span>
-                    <button id="btn-logout" class="text-sm font-bold text-red-500 hover:text-red-700 transition-colors">Sair</button>
+                <div class="flex items-center gap-3 md:gap-6">
+                    <span class="text-xs md:text-sm font-medium text-gray-600 hidden sm:block" id="user-greeting">Olá, Operador</span>
+                    <button id="btn-logout" class="text-xs md:text-sm font-bold text-red-500 hover:text-red-700 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-power-off"></i> <span class="hidden xs:inline">Sair</span>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         
-        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">Seu Perfil Comportamental</h1>
-                <p class="text-gray-500 mt-1">Análise gerada com base nas suas 30 respostas.</p>
+        <div class="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div class="text-center md:text-left">
+                <h1 class="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">Relatório Comportamental</h1>
+                <p class="text-gray-500 mt-2 text-sm md:text-base font-medium">Mapeamento de competências baseado na metodologia DISC.</p>
             </div>
-            <button id="btn-download" class="mt-4 md:mt-0 bg-brand-900 hover:bg-brand-500 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                Baixar PDF
+            <button id="btn-download" class="w-full md:w-auto bg-brand-900 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-brand-900/20 transition-all flex items-center justify-center gap-3">
+                <i class="fa-solid fa-file-pdf"></i>
+                Exportar Dados (.PDF)
             </button>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             
-            <div class="lg:col-span-1 space-y-8">
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center relative overflow-hidden">
+            <div class="lg:col-span-1">
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-gray-100 text-center relative overflow-hidden group">
                     <div class="absolute top-0 left-0 w-full h-2 bg-red-500" id="perfil-color-bar"></div>
-                    <div class="w-24 h-24 mx-auto bg-red-100 text-red-600 rounded-full flex items-center justify-center text-4xl font-black mb-4" id="perfil-letra">D</div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2" id="perfil-titulo">Dominância</h2>
-                    <p class="text-sm text-gray-600" id="perfil-resumo">
-                        Você é focado em resultados, age com rapidez e prefere assumir o controle das situações. Desafios são o seu combustível.
-                    </p>
+                    
+                    <div class="w-24 h-24 md:w-28 md:h-28 mx-auto bg-red-50 text-red-600 rounded-full flex items-center justify-center text-4xl md:text-5xl font-black mb-6 shadow-inner transition-transform group-hover:scale-105" id="perfil-letra">
+                        D
+                    </div>
+                    
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Perfil Predominante</span>
+                    <h2 class="text-3xl font-black text-gray-900 mt-2 mb-4" id="perfil-titulo">Dominância</h2>
+                    
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium" id="perfil-resumo">
+                            Você é focado em resultados, age com rapidez e prefere assumir o controle das situações. Desafios são o seu combustível principal.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold text-gray-900 mb-6">Intensidade dos Fatores</h3>
+            <div class="lg:col-span-2 bg-white p-6 md:p-10 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-gray-100">
+                <h3 class="text-xl font-black text-gray-900 mb-8 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-simple text-brand-500"></i> Intensidade dos Fatores
+                </h3>
                 
-                <div class="space-y-6">
-                    <div>
-                        <div class="flex justify-between text-sm font-bold mb-1">
-                            <span class="text-red-600">Dominância (D)</span>
-                            <span class="text-gray-700" id="score-d-text">85%</span>
+                <div class="space-y-8">
+                    <div class="group">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-sm font-black text-red-600 uppercase tracking-widest">Dominância (D)</span>
+                            <span class="text-lg font-mono font-black text-gray-900" id="score-d-text">85%</span>
                         </div>
-                        <div class="w-full bg-gray-100 rounded-full h-3">
-                            <div class="bg-red-500 h-3 rounded-full" id="score-d-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm font-bold mb-1">
-                            <span class="text-yellow-500">Influência (I)</span>
-                            <span class="text-gray-700" id="score-i-text">40%</span>
-                        </div>
-                        <div class="w-full bg-gray-100 rounded-full h-3">
-                            <div class="bg-yellow-400 h-3 rounded-full" id="score-i-bar" style="width: 40%"></div>
+                        <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden shadow-inner">
+                            <div class="bg-red-500 h-full rounded-full transition-all duration-1000 ease-out" id="score-d-bar" style="width: 85%"></div>
                         </div>
                     </div>
 
-                    <div>
-                        <div class="flex justify-between text-sm font-bold mb-1">
-                            <span class="text-green-600">Estabilidade (S)</span>
-                            <span class="text-gray-700" id="score-s-text">20%</span>
+                    <div class="group">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-sm font-black text-yellow-500 uppercase tracking-widest">Influência (I)</span>
+                            <span class="text-lg font-mono font-black text-gray-900" id="score-i-text">40%</span>
                         </div>
-                        <div class="w-full bg-gray-100 rounded-full h-3">
-                            <div class="bg-green-500 h-3 rounded-full" id="score-s-bar" style="width: 20%"></div>
+                        <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden shadow-inner">
+                            <div class="bg-yellow-400 h-full rounded-full transition-all duration-1000 ease-out" id="score-i-bar" style="width: 40%"></div>
                         </div>
                     </div>
 
-                    <div>
-                        <div class="flex justify-between text-sm font-bold mb-1">
-                            <span class="text-blue-600">Conformidade (C)</span>
-                            <span class="text-gray-700" id="score-c-text">55%</span>
+                    <div class="group">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-sm font-black text-emerald-600 uppercase tracking-widest">Estabilidade (S)</span>
+                            <span class="text-lg font-mono font-black text-gray-900" id="score-s-text">20%</span>
                         </div>
-                        <div class="w-full bg-gray-100 rounded-full h-3">
-                            <div class="bg-blue-500 h-3 rounded-full" id="score-c-bar" style="width: 55%"></div>
+                        <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden shadow-inner">
+                            <div class="bg-emerald-500 h-full rounded-full transition-all duration-1000 ease-out" id="score-s-bar" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-sm font-black text-blue-600 uppercase tracking-widest">Conformidade (C)</span>
+                            <span class="text-lg font-mono font-black text-gray-900" id="score-c-text">55%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden shadow-inner">
+                            <div class="bg-blue-500 h-full rounded-full transition-all duration-1000 ease-out" id="score-c-bar" style="width: 55%"></div>
                         </div>
                     </div>
                 </div>
@@ -112,31 +125,38 @@
 
         </div>
 
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h4 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                    <span class="text-green-500">↑</span> Pontos Fortes
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:border-emerald-100 transition-colors group">
+                <h4 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
+                    <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fa-solid fa-arrow-up"></i></div>
+                    Pontos de Excelência
                 </h4>
-                <ul class="list-disc list-inside text-sm text-gray-600 space-y-2" id="pontos-fortes">
-                    <li>Tomada de decisão rápida sob pressão.</li>
-                    <li>Foco inabalável na entrega de resultados.</li>
-                    <li>Coragem para assumir riscos calculados.</li>
+                <ul class="space-y-4 text-sm md:text-base text-gray-600 font-medium" id="pontos-fortes">
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> Tomada de decisão ágil sob alta pressão.</li>
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> Orientação inabalável para metas e resultados.</li>
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> Autonomia e liderança natural em crises.</li>
                 </ul>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h4 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                    <span class="text-red-500">↓</span> Pontos de Atenção
+            <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:border-red-100 transition-colors group">
+                <h4 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
+                    <div class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fa-solid fa-arrow-down"></i></div>
+                    Zonas de Desenvolvimento
                 </h4>
-                <ul class="list-disc list-inside text-sm text-gray-600 space-y-2" id="pontos-atencao">
-                    <li>Pode ser visto como autoritário ou impaciente.</li>
-                    <li>Tendência a atropelar processos em nome da velocidade.</li>
-                    <li>Dificuldade em lidar com rotinas muito operacionais.</li>
+                <ul class="space-y-4 text-sm md:text-base text-gray-600 font-medium" id="pontos-atencao">
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> Necessidade de desenvolver escuta ativa.</li>
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> Atenção à paciência em processos coletivos.</li>
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> Equilibrar velocidade com precisão de dados.</li>
                 </ul>
             </div>
         </div>
 
     </main>
-<script src="js/app.js"></script>
+
+    <footer class="bg-white border-t border-gray-100 py-10 text-center">
+        <p class="text-gray-400 text-xs font-black uppercase tracking-widest">&copy; 2026 Synthera | Inteligência de Dados Comportamentais</p>
+    </footer>
+
+    <script src="js/app.js"></script>
 </body>
 </html>

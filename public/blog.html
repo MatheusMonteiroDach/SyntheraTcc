@@ -4,52 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synthera | Insights</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans">
+<body class="bg-slate-50 text-slate-900 font-sans selection:bg-blue-100">
     
-    <nav class="bg-white border-b border-slate-100 p-5 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <a href="painel.html" class="text-slate-400 hover:text-blue-600 font-bold transition"><i class="fa-solid fa-arrow-left mr-2"></i> Voltar ao Painel</a>
-            <span class="text-xl font-black italic tracking-tighter text-blue-600">SYNTHERA<span class="text-slate-900">.ACADEMY</span></span>
+    <nav class="bg-white border-b border-slate-100 p-4 md:p-5 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="painel.html" class="text-slate-400 hover:text-blue-600 font-bold transition text-xs md:text-sm flex items-center">
+                <i class="fa-solid fa-arrow-left mr-2"></i> <span class="hidden sm:inline">Voltar ao Painel</span><span class="sm:hidden">Voltar</span>
+            </a>
+            <span class="text-lg md:text-xl font-black italic tracking-tighter text-blue-600 uppercase">SYNTHERA<span class="text-slate-900">.Academy</span></span>
         </div>
     </nav>
 
-    <header class="max-w-5xl mx-auto py-16 px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-black mb-4 text-slate-900">Inteligência Comportamental</h1>
-        <p class="text-slate-500 text-lg">Artigos e estudos sobre a metodologia DISC para maximizar seu potencial.</p>
+    <header class="max-w-5xl mx-auto py-12 md:py-20 px-6 text-center">
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-black mb-4 text-slate-900 tracking-tight">Inteligência Comportamental</h1>
+        <p class="text-slate-500 text-base md:text-lg max-w-2xl mx-auto font-medium">Artigos e estudos sobre a metodologia DISC para maximizar seu potencial e sua carreira.</p>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <a href="post.html?id=o-que-e-disc" class="group bg-white rounded-[2rem] border border-slate-100 p-8 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col justify-between h-full">
-            <div>
-                <span class="text-blue-600 text-[10px] font-black uppercase tracking-widest mb-4 block">Metodologia</span>
-                <h3 class="text-2xl font-black mb-4 group-hover:text-blue-600 transition-colors">O que é a Metodologia DISC e por que ela é o padrão ouro?</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-8">Entenda a teoria do Dr. William Moulton Marston e como os quatro pilares moldam o nosso comportamento diário, nossas decisões e nossa forma de interagir com o mundo.</p>
-            </div>
-            <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-blue-600 group-hover:translate-x-2 transition-transform"></i></span>
-        </a>
+    <main class="max-w-6xl mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            
+            <a href="post.html?id=o-que-e-disc" class="group bg-white rounded-[2rem] border border-slate-100 p-6 md:p-8 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 flex flex-col h-full">
+                <div class="flex-grow">
+                    <span class="text-blue-600 text-[10px] font-black uppercase tracking-widest mb-4 block bg-blue-50 w-fit px-3 py-1 rounded-full">Metodologia</span>
+                    <h3 class="text-xl md:text-2xl font-black mb-4 group-hover:text-blue-600 transition-colors leading-tight">O que é a Metodologia DISC e por que ela é o padrão ouro?</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Entenda a teoria do Dr. William Moulton Marston e como os quatro pilares moldam nossas decisões diárias.</p>
+                </div>
+                <div class="pt-6 border-t border-slate-50 mt-auto">
+                    <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-blue-600 group-hover:translate-x-2 transition-transform"></i></span>
+                </div>
+            </a>
 
-        <a href="post.html?id=educacao-adaptativa" class="group bg-white rounded-[2rem] border border-slate-100 p-8 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col justify-between h-full">
-            <div>
-                <span class="text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-4 block">Aprendizado</span>
-                <h3 class="text-2xl font-black mb-4 group-hover:text-emerald-500 transition-colors">Educação Adaptativa: Como cada perfil absorve conhecimento?</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-8">O segredo do engajamento escolar e corporativo: descubra por que algumas pessoas preferem debates dinâmicos enquanto outras precisam de manuais técnicos.</p>
-            </div>
-            <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-emerald-500 group-hover:translate-x-2 transition-transform"></i></span>
-        </a>
+            <a href="post.html?id=educacao-adaptativa" class="group bg-white rounded-[2rem] border border-slate-100 p-6 md:p-8 hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-300 flex flex-col h-full">
+                <div class="flex-grow">
+                    <span class="text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-4 block bg-emerald-50 w-fit px-3 py-1 rounded-full">Aprendizado</span>
+                    <h3 class="text-xl md:text-2xl font-black mb-4 group-hover:text-emerald-500 transition-colors leading-tight">Educação Adaptativa: Como cada perfil absorve conhecimento?</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">O segredo do engajamento escolar: descubra por que alguns preferem debates e outros precisam de manuais.</p>
+                </div>
+                <div class="pt-6 border-t border-slate-50 mt-auto">
+                    <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-emerald-500 group-hover:translate-x-2 transition-transform"></i></span>
+                </div>
+            </a>
 
-        <a href="post.html?id=gestao-de-projetos" class="group bg-white rounded-[2rem] border border-slate-100 p-8 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col justify-between h-full">
-            <div>
-                <span class="text-purple-500 text-[10px] font-black uppercase tracking-widest mb-4 block">Gestão e Liderança</span>
-                <h3 class="text-2xl font-black mb-4 group-hover:text-purple-500 transition-colors">O impacto do DISC na gestão de projetos e equipes</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-8">Como líderes e gestores de projetos utilizam a análise comportamental para reduzir conflitos, alinhar expectativas e alocar talentos corretamente.</p>
-            </div>
-            <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-purple-500 group-hover:translate-x-2 transition-transform"></i></span>
-        </a>
+            <a href="post.html?id=gestao-de-projetos" class="group bg-white rounded-[2rem] border border-slate-100 p-6 md:p-8 hover:shadow-2xl hover:shadow-purple-900/10 transition-all duration-300 flex flex-col h-full">
+                <div class="flex-grow">
+                    <span class="text-purple-500 text-[10px] font-black uppercase tracking-widest mb-4 block bg-purple-50 w-fit px-3 py-1 rounded-full">Gestão</span>
+                    <h3 class="text-xl md:text-2xl font-black mb-4 group-hover:text-purple-500 transition-colors leading-tight">O impacto do DISC na gestão de projetos e equipes</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Como gestores utilizam a análise comportamental para reduzir conflitos e alinhar expectativas do time.</p>
+                </div>
+                <div class="pt-6 border-t border-slate-50 mt-auto">
+                    <span class="text-slate-800 font-bold text-sm flex items-center gap-2">Ler artigo <i class="fa-solid fa-arrow-right text-purple-500 group-hover:translate-x-2 transition-transform"></i></span>
+                </div>
+            </a>
 
+        </div>
     </main>
+
+    <footer class="bg-white border-t border-slate-100 py-12 text-center">
+        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">&copy; 2026 Synthera Project - Conhecimento para Evolução</p>
+    </footer>
+
 </body>
 </html>

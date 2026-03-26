@@ -12,17 +12,20 @@ app.use(express.static(publicDirectoryPath));
 const db = new sqlite3.Database('./database.db');
 
 db.serialize(() => {
-    // Tabela de Usuários atualizada com LGPD e Região
+    // 💡 Otimização realizada: Estrutura de tabela robusta para suportar logística completa e LGPD
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
         email TEXT UNIQUE,
         senha_hash TEXT,
-        cpf TEXT,
+        cpf TEXT UNIQUE,
         cep TEXT,
+        rua TEXT,
+        bairro TEXT,
         cidade TEXT,
         estado TEXT,
         numero_endereco TEXT,
+        complemento TEXT,
         aceitou_termos BOOLEAN,
         tipo TEXT DEFAULT 'aluno',
         data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -37,7 +40,7 @@ db.serialize(() => {
         FOREIGN KEY(user_id) REFERENCES users(id)
     )`);
 
-    // Forçar você como Gestor
+    // Configuração de Acesso Master
     const adminEmail = 'dachmatheus@gmail.com';
     const hashAdmin = bcrypt.hashSync('123456', 10);
     
@@ -46,58 +49,74 @@ db.serialize(() => {
     db.run("UPDATE users SET tipo = 'gestor', senha_hash = ? WHERE email = ?", [hashAdmin, adminEmail]);
 });
 
-// --- ROTAS ---
+// --- API DE AUTENTICAÇÃO ---
 
 app.post('/api/login', (req, res) => {
     const { email, senha, tipo } = req.body;
     db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
-        if (!user || !bcrypt.compareSync(senha, user.senha_hash)) return res.status(401).json({ erro: "E-mail ou senha incorretos." });
-        if (user.tipo !== tipo) return res.status(403).json({ erro: `Acesso negado para o perfil ${tipo}.` });
+        if (!user || !bcrypt.compareSync(senha, user.senha_hash)) {
+            return res.status(401).json({ erro: "Credenciais inválidas." });
+        }
+        if (user.tipo !== tipo) {
+            return res.status(403).json({ erro: `Acesso negado: Perfil ${tipo} requerido.` });
+        }
         res.json({ userId: user.id, nome: user.nome, tipo: user.tipo });
     });
 });
 
 app.post('/api/register', (req, res) => {
-    const { nome, email, senha, cpf, cep, cidade, estado, numero, termos } = req.body;
+    const { nome, email, senha, cpf, cep, rua, bairro, cidade, estado, numero, complemento, termos } = req.body;
     
-    if(!termos) return res.status(400).json({ erro: "Você precisa aceitar os Termos de Serviço." });
+    if(!termos) return res.status(400).json({ erro: "Aceite da LGPD é obrigatório." });
 
     const hash = bcrypt.hashSync(senha, 10);
     
-    db.run(`INSERT INTO users (nome, email, senha_hash, cpf, cep, cidade, estado, numero_endereco, aceitou_termos) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-    [nome, email, hash, cpf, cep, cidade, estado, numero, termos], function(err) {
-        if (err) return res.status(400).json({ erro: "E-mail ou CPF já cadastrado no sistema." });
+    // 💡 Otimização realizada: Query estendida para suportar o mapeamento geográfico completo
+    const sql = `INSERT INTO users (nome, email, senha_hash, cpf, cep, rua, bairro, cidade, estado, numero_endereco, complemento, aceitou_termos) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    
+    db.run(sql, [nome, email, hash, cpf, cep, rua, bairro, cidade, estado, numero, complemento, termos], function(err) {
+        if (err) {
+            console.error(err.message);
+            return res.status(400).json({ erro: "E-mail ou CPF já registrados no sistema." });
+        }
         res.json({ userId: this.lastID, nome, tipo: 'aluno' });
     });
 });
+
+// --- API DE TESTES E RESULTADOS ---
 
 app.post('/api/testes', (req, res) => {
     const { userId, perfilPredominante, pontuacao } = req.body;
     db.run(`INSERT INTO disc_tests (user_id, perfil_predominante, d_score, i_score, s_score, c_score) VALUES (?, ?, ?, ?, ?, ?)`, 
     [userId, perfilPredominante, pontuacao.D, pontuacao.I, pontuacao.S, pontuacao.C], (err) => {
-        if (err) return res.status(500).json({ erro: "Erro ao salvar teste." });
+        if (err) return res.status(500).json({ erro: "Erro ao processar matriz DISC." });
         res.json({ ok: true });
     });
 });
 
+// --- DASHBOARD ESTRATÉGICO (ADMIN) ---
+
 app.get('/api/admin/stats', (req, res) => {
-    const ativosAgora = Math.floor(Math.random() * 8) + 2; 
-    const stats = { totalAlunos: 0, totalTestes: 0, ativos: ativosAgora, distribuicao: [], ultimosTestes: [] };
+    const stats = { totalAlunos: 0, totalTestes: 0, ativos: Math.floor(Math.random() * 5) + 1, distribuicao: [], ultimosTestes: [] };
 
     db.get("SELECT COUNT(*) as total FROM users WHERE tipo = 'aluno'", (err, r1) => {
         stats.totalAlunos = r1 ? r1.total : 0;
         db.get("SELECT COUNT(*) as total FROM disc_tests", (err, r2) => {
             stats.totalTestes = r2 ? r2.total : 0;
+            
             db.all("SELECT perfil_predominante as label, COUNT(*) as value FROM disc_tests GROUP BY perfil_predominante", (err, rows) => {
                 stats.distribuicao = rows || [];
-                // Busca os últimos testes INCLUINDO A CIDADE E ESTADO
-                db.all(`
+                
+                // Mapeamento geográfico para o Radar Regional
+                const queryLogs = `
                     SELECT u.nome, u.cidade, u.estado, d.perfil_predominante, d.data_realizacao 
                     FROM disc_tests d 
                     JOIN users u ON d.user_id = u.id 
-                    ORDER BY d.data_realizacao DESC LIMIT 6
-                `, (err, testes) => {
+                    ORDER BY d.data_realizacao DESC LIMIT 10
+                `;
+                
+                db.all(queryLogs, (err, testes) => {
                     stats.ultimosTestes = testes || [];
                     res.json(stats);
                 });
@@ -109,4 +128,4 @@ app.get('/api/admin/stats', (req, res) => {
 app.get('*', (req, res) => { res.sendFile(path.join(publicDirectoryPath, 'index.html')); });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Synthera Online na porta ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Sistema Synthera Operacional | Porta ${PORT}`));

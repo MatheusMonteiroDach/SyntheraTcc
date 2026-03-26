@@ -3,68 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synthera | Termos de Serviço e LGPD</title>
+    <title>Synthera | Termos e LGPD</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans">
+<body class="bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
     
-    <nav class="bg-white border-b border-slate-100 p-5 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <span class="text-xl font-black italic tracking-tighter text-blue-600">SYNTHERA<span class="text-slate-900">.PRO</span></span>
-            <button onclick="window.close()" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-2">
-                Fechar Guia <i class="fa-solid fa-xmark"></i>
+    <nav class="bg-white border-b border-slate-100 p-4 md:p-5 sticky top-0 z-50 shadow-sm print:hidden">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <span class="text-lg md:text-xl font-black italic tracking-tighter text-blue-600 uppercase">SYNTHERA<span class="text-slate-900">.PRO</span></span>
+            
+            <button onclick="window.close()" class="text-xs md:text-sm font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-2 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
+                <span class="hidden sm:inline">Fechar Documento</span> <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
     </nav>
 
-    <header class="max-w-4xl mx-auto pt-16 pb-8 px-6 border-b border-slate-200">
-        <h1 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Termos de Serviço e Política de Privacidade</h1>
-        <p class="text-slate-500 font-bold text-sm">Última atualização: Março de 2026</p>
+    <header class="max-w-4xl mx-auto pt-10 md:pt-16 pb-8 px-5 md:px-6 border-b border-slate-200">
+        <h1 class="text-2xl md:text-4xl font-black text-slate-900 mb-4 tracking-tight leading-tight">Termos de Serviço e Política de Privacidade</h1>
+        <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+            <p class="text-slate-500 font-bold text-[10px] md:text-xs uppercase tracking-widest">Atualizado em: Março de 2026</p>
+        </div>
     </header>
 
-    <main class="max-w-4xl mx-auto py-12 px-6 pb-32">
-        <div class="bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/40 prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-blue-600">
+    <main class="max-w-4xl mx-auto py-8 md:py-12 px-4 md:px-6 pb-24 md:pb-32">
+        <div class="bg-white p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/40 prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-blue-600 print:shadow-none print:border-none print:p-0">
             
-            <p>Bem-vindo ao <strong>Synthera</strong>. Esta plataforma tem o propósito de democratizar o acesso à qualificação profissional, combinando a metodologia de análise comportamental DISC com trilhas educacionais (EJA e cursos profissionalizantes).</p>
-            <p>A proteção dos seus dados é nossa prioridade. Este documento estabelece como coletamos, usamos e protegemos suas informações, em estrita conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018)</strong> vigente no Brasil.</p>
+            <p class="text-base md:text-lg leading-relaxed">Bem-vindo ao <strong>Synthera</strong>. Esta plataforma tem o propósito de democratizar o acesso à qualificação profissional, combinando a metodologia de análise comportamental DISC com trilhas educacionais (EJA e cursos profissionalizantes).</p>
+            
+            <p class="text-base md:text-lg leading-relaxed">A proteção dos seus dados é nossa prioridade absoluta. Este documento estabelece como coletamos, usamos e protegemos suas informações, em estrita conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018)</strong>.</p>
 
-            <h3>1. Coleta de Dados Pessoais</h3>
-            <p>Para a criação da sua conta e para o pleno funcionamento da plataforma, coletamos os seguintes dados informados por você:</p>
-            <ul>
-                <li><strong>Dados de Identificação:</strong> Nome completo, E-mail e CPF (utilizado para evitar cadastros duplicados e garantir a integridade da plataforma).</li>
-                <li><strong>Dados Geográficos:</strong> CEP, Cidade, Estado e Número do endereço. Estes dados são utilizados de forma anonimizada em nossos mapas de calor para mapear regiões de maior acesso e direcionar oportunidades de cursos.</li>
-            </ul>
+            <div class="space-y-8 mt-10">
+                <section>
+                    <h3 class="text-xl md:text-2xl flex items-center gap-3">1. Coleta de Dados Pessoais</h3>
+                    <p>Para a criação da sua conta e para o pleno funcionamento da plataforma, coletamos os seguintes dados informados por você:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Dados de Identificação:</strong> Nome completo, E-mail e CPF (essencial para evitar duplicidade e garantir integridade).</li>
+                        <li><strong>Dados Geográficos:</strong> CEP, Logradouro, Bairro, Cidade e Estado.</li>
+                    </ul>
+                </section>
 
-            <h3>2. Análise Comportamental (Teste DISC)</h3>
-            <p>Ao realizar o teste DISC, você fornece respostas que refletem seus padrões de comportamento e tomada de decisão. Estes dados são cruzados pelo nosso sistema para gerar um <strong>Perfil Predominante (D, I, S ou C)</strong>. O resultado é utilizado unicamente para sugerir trilhas de estudo e capacitação aderentes ao seu perfil.</p>
+                <section>
+                    <h3 class="text-xl md:text-2xl flex items-center gap-3">2. Análise Comportamental (DISC)</h3>
+                    <p>Ao realizar o teste, você fornece respostas que refletem padrões de comportamento. Estes dados são processados para gerar um <strong>Perfil Predominante (D, I, S ou C)</strong>, utilizado exclusivamente para sugerir trilhas de estudo personalizadas.</p>
+                </section>
 
-            <h3>3. Finalidade do Tratamento dos Dados</h3>
-            <p>Os dados coletados são utilizados exclusivamente para:</p>
-            <ol>
-                <li>Criar o seu painel de usuário e salvar o seu progresso.</li>
-                <li>Gerar o seu relatório comportamental personalizado.</li>
-                <li>Fornecer métricas estatísticas (Dashboard) para a gestão da plataforma, focando na melhoria contínua da entrega educacional.</li>
-            </ol>
+                <section>
+                    <h3 class="text-xl md:text-2xl flex items-center gap-3">3. Finalidade e Tratamento</h3>
+                    <p>Os dados coletados são utilizados para:</p>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Personalização do Painel do Aluno e salvamento de progresso.</li>
+                        <li>Geração de relatórios de competências.</li>
+                        <li>Mapeamento estatístico regional (Dashboard do Gestor) para melhoria da oferta educacional.</li>
+                    </ol>
+                </section>
 
-            <h3>4. Compartilhamento e Segurança</h3>
-            <p>O Synthera <strong>NÃO</strong> vende, aluga ou repassa seus dados pessoais (incluindo seu CPF e e-mail) para terceiros ou empresas de marketing. Todas as senhas são armazenadas utilizando criptografia de ponta (hashes seguros). O acesso administrativo aos dados é restrito à equipe gestora do projeto.</p>
+                <section>
+                    <h3 class="text-xl md:text-2xl flex items-center gap-3">4. Segurança e Criptografia</h3>
+                    <p>O Synthera <strong>NÃO</strong> comercializa dados com terceiros. Todas as credenciais de acesso são protegidas por criptografia de alto nível (Hash BCrypt). O acesso administrativo é restrito e auditado.</p>
+                </section>
 
-            <h3>5. Direitos do Titular</h3>
-            <p>Conforme o Art. 18 da LGPD, você tem o direito de, a qualquer momento e mediante requisição:</p>
-            <ul>
-                <li>Confirmar a existência de tratamento dos seus dados.</li>
-                <li>Acessar e corrigir dados incompletos ou desatualizados.</li>
-                <li>Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários ou excessivos.</li>
-                <li>Revogar este consentimento e solicitar a exclusão total da sua conta e do seu teste DISC do nosso banco de dados.</li>
-            </ul>
+                <section>
+                    <h3 class="text-xl md:text-2xl flex items-center gap-3">5. Direitos do Titular</h3>
+                    <p>Conforme o Art. 18 da LGPD, você pode, a qualquer momento, solicitar o acesso, a correção ou a exclusão total dos seus dados e do seu histórico de testes da nossa base ativa.</p>
+                </section>
+            </div>
 
-            <hr class="my-8 border-slate-200">
-
-            <p class="text-sm text-slate-500 italic">Ao marcar a caixa de seleção na tela de cadastro e clicar em "Criar Conta Segura", você declara ter lido, compreendido e aceitado todos os termos estipulados acima.</p>
+            <div class="mt-12 pt-8 border-t border-slate-100">
+                <p class="text-xs md:text-sm text-slate-500 italic bg-slate-50 p-4 md:p-6 rounded-2xl border border-slate-100">
+                    Ao confirmar o aceite na tela de cadastro, você declara estar plenamente ciente das políticas aqui descritas.
+                </p>
+            </div>
         </div>
     </main>
+
+    <footer class="bg-white border-t border-slate-100 py-10 text-center print:hidden">
+        <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Synthera Project &copy; 2026</p>
+    </footer>
 
 </body>
 </html>
