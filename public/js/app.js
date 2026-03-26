@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname;
     if (path.includes('login.html')) initLogin();
     else if (path.includes('admin.html')) initAdmin();
-    // Se tiver teste.html ou relatorio.html, as funções continuam funcionando aqui
+    else if (path.includes('teste.html')) initTest(); // ← O ROTEADOR AGORA ACHA O TESTE!
 });
 
 // --- LÓGICA DE LOGIN ---
@@ -64,7 +64,9 @@ function initLogin() {
             localStorage.setItem('synthera_user_id', data.userId);
             localStorage.setItem('synthera_user_tipo', data.tipo);
             localStorage.setItem('synthera_user_nome', data.nome);
-            window.location.href = data.tipo === 'gestor' ? 'admin.html' : 'painel.html';
+            
+            // Direciona o aluno direto para o teste após o cadastro/login
+            window.location.href = data.tipo === 'gestor' ? 'admin.html' : 'teste.html';
         } catch (error) {
             console.error(error);
             alert("Erro ao conectar com o servidor.");
@@ -72,7 +74,7 @@ function initLogin() {
     };
 }
 
-// --- LÓGICA DO PAINEL GESTOR (NOVO) ---
+// --- LÓGICA DO PAINEL GESTOR ---
 async function initAdmin() {
     if (localStorage.getItem('synthera_user_tipo') !== 'gestor') {
         window.location.href = 'index.html';
@@ -125,4 +127,158 @@ async function initAdmin() {
     } catch (error) {
         console.error("Erro ao carregar Dashboard:", error);
     }
+}
+
+// --- LÓGICA DO TESTE DISC (NOVO) ---
+function initTest() {
+    const userId = localStorage.getItem('synthera_user_id');
+    if (!userId) {
+        alert("Sessão expirada. Faça login novamente.");
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Banco de Perguntas Dinâmicas
+    const questions = [
+        {
+            text: "Em um projeto em equipe, qual é o seu papel natural?",
+            options: [
+                { value: "D", text: "Assumo a liderança e foco em definir prazos e metas rápidas." },
+                { value: "I", text: "Motivo a equipe e facilito a comunicação entre todos para manter a energia alta." },
+                { value: "S", text: "Apoio as decisões do grupo e garanto que o trabalho flua sem estresse ou atritos." },
+                { value: "C", text: "Organizo as planilhas, crio processos e garanto a qualidade técnica das entregas." }
+            ]
+        },
+        {
+            text: "Como você costuma agir sob pressão extrema?",
+            options: [
+                { value: "D", text: "Assumo o controle total e busco resolver o problema no ato, custe o que custar." },
+                { value: "I", text: "Tento manter o otimismo, uso meu networking e engajo a equipe para achar uma saída." },
+                { value: "S", text: "Mantenho a calma, evito o pânico e sigo o plano original passo a passo." },
+                { value: "C", text: "Paro, analiso todos os dados detalhadamente e só tomo uma decisão com base em fatos." }
+            ]
+        },
+        {
+            text: "Ao tomar uma decisão importante na carreira, você se baseia mais em:",
+            options: [
+                { value: "D", text: "Resultados rápidos, instinto para o sucesso e o tamanho do desafio." },
+                { value: "I", text: "Como isso vai impactar as pessoas ao meu redor e minha visibilidade." },
+                { value: "S", text: "Segurança de longo prazo, consenso da família e manter um ambiente estável." },
+                { value: "C", text: "Fatos concretos, estatísticas do mercado e uma análise rigorosa de riscos." }
+            ]
+        },
+        {
+            text: "O que mais te frustra no ambiente de trabalho ou de estudos?",
+            options: [
+                { value: "D", text: "Lentidão, indecisão da equipe e falta de foco em resultados práticos." },
+                { value: "I", text: "Rotina rígida, isolamento social e falta de reconhecimento das minhas ideias." },
+                { value: "S", text: "Mudanças bruscas de cronograma, conflitos desnecessários e falta de colaboração." },
+                { value: "C", text: "Desorganização geral, falta de regras claras e tarefas entregues de qualquer jeito." }
+            ]
+        },
+        {
+            text: "Como você lida com regras e procedimentos estabelecidos?",
+            options: [
+                { value: "D", text: "Se a regra atrapalha o resultado final, eu questiono e tento quebrar ou mudar." },
+                { value: "I", text: "Sigo as regras básicas, mas prefiro flexibilidade para criar e adaptar as coisas." },
+                { value: "S", text: "Respeito as regras e a tradição, pois elas mantêm a ordem e a harmonia do grupo." },
+                { value: "C", text: "Sigo rigorosamente à risca, pois as regras garantem a excelência e evitam falhas." }
+            ]
+        }
+    ];
+
+    let currentIndex = 0;
+    let userAnswers = [];
+
+    const questionText = document.getElementById('question-text');
+    const quizForm = document.getElementById('quiz-form');
+    const btnProxima = document.getElementById('btn-proxima');
+    const btnVoltar = document.getElementById('btn-voltar');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    function renderQuestion() {
+        const q = questions[currentIndex];
+        questionText.textContent = q.text;
+
+        // Injeta as alternativas no HTML
+        quizForm.innerHTML = q.options.map((opt) => `
+            <label class="block cursor-pointer">
+                <input type="radio" name="resposta" value="${opt.value}" class="peer sr-only" ${userAnswers[currentIndex] === opt.value ? 'checked' : ''}>
+                <div class="w-full p-5 rounded-2xl border-2 border-gray-100 peer-checked:border-brand-500 peer-checked:bg-blue-50 hover:bg-gray-50 transition-all">
+                    <span class="text-gray-600 font-bold peer-checked:text-brand-900">${opt.text}</span>
+                </div>
+            </label>
+        `).join('');
+
+        // Atualiza Progresso
+        const progressoPercentual = ((currentIndex + 1) / questions.length) * 100;
+        progressBar.style.width = `${progressoPercentual}%`;
+        progressText.textContent = `Pergunta ${currentIndex + 1} de ${questions.length}`;
+
+        // Controla botões
+        btnVoltar.classList.toggle('hidden', currentIndex === 0);
+        btnProxima.innerHTML = currentIndex === questions.length - 1 ? 'Finalizar Análise <i class="fa-solid fa-check ml-2"></i>' : 'Próxima <i class="fa-solid fa-arrow-right ml-2"></i>';
+    }
+
+    btnProxima.onclick = async () => {
+        const selected = document.querySelector('input[name="resposta"]:checked');
+        if (!selected) {
+            alert("Por favor, selecione uma alternativa antes de avançar.");
+            return;
+        }
+
+        userAnswers[currentIndex] = selected.value; // Salva a resposta
+
+        if (currentIndex < questions.length - 1) {
+            currentIndex++;
+            renderQuestion();
+        } else {
+            // FIM DO TESTE: Calcula tudo
+            const pontuacao = { D: 0, I: 0, S: 0, C: 0 };
+            userAnswers.forEach(resposta => pontuacao[resposta]++);
+
+            // Acha o perfil dominante
+            let perfilPredominante = 'D';
+            let maxScore = pontuacao['D'];
+            for (const p in pontuacao) {
+                if (pontuacao[p] > maxScore) {
+                    maxScore = pontuacao[p];
+                    perfilPredominante = p;
+                }
+            }
+
+            btnProxima.disabled = true;
+            btnProxima.textContent = "Processando Dados...";
+
+            try {
+                const res = await fetch('/api/testes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, perfilPredominante, pontuacao })
+                });
+
+                if (res.ok) {
+                    alert(`Análise concluída com sucesso! Seu perfil predominante é: ${perfilPredominante}`);
+                    window.location.href = 'index.html'; // Aqui você pode mudar para relatorio.html se criar a página de relatório!
+                } else {
+                    alert("Erro ao salvar resultado. Tente novamente.");
+                    btnProxima.disabled = false;
+                }
+            } catch (error) {
+                alert("Erro de conexão com o servidor.");
+                btnProxima.disabled = false;
+            }
+        }
+    };
+
+    btnVoltar.onclick = () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderQuestion();
+        }
+    };
+
+    // Dá o start inicial na tela
+    renderQuestion();
 }
