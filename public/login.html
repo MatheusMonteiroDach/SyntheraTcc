@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"><title>Synthera | Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-900 flex items-center justify-center min-h-screen px-6">
-    <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md">
+
+    <div class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md">
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-black italic">SYNTHERA</h2>
-            <p class="text-slate-400 font-bold text-[10px] uppercase mt-2">Escolha seu perfil</p>
+            <h2 class="text-3xl font-black italic tracking-tighter text-slate-900">SYNTHERA</h2>
+            <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Plataforma de Análise DISC</p>
         </div>
+
         <div class="flex bg-slate-100 p-1 rounded-2xl mb-8">
-            <button id="perfil-aluno" class="flex-1 py-3 rounded-xl text-sm font-bold bg-white text-blue-600 shadow-sm">Sou Aluno</button>
-            <button id="perfil-gestor" class="flex-1 py-3 rounded-xl text-sm font-bold text-slate-500">Sou Gestor</button>
+            <button type="button" id="btn-aluno" class="flex-1 py-3 rounded-xl text-sm font-bold bg-white text-blue-600 shadow-sm transition-all">
+                <i class="fa-solid fa-graduation-cap mr-2"></i>Aluno
+            </button>
+            <button type="button" id="btn-gestor" class="flex-1 py-3 rounded-xl text-sm font-bold text-slate-500 hover:text-blue-600 transition-all">
+                <i class="fa-solid fa-user-tie mr-2"></i>Gestor
+            </button>
         </div>
-        <div id="auth-tabs" class="flex mb-8 border-b">
-            <button id="tab-login" class="flex-1 pb-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600">Login</button>
-            <button id="tab-register" class="flex-1 pb-3 text-sm font-bold text-slate-400">Cadastro</button>
+
+        <div id="auth-tabs" class="flex mb-8 border-b border-slate-100">
+            <button id="tab-login" class="flex-1 pb-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600">Entrar</button>
+            <button id="tab-register" class="flex-1 pb-3 text-sm font-bold text-slate-400">Criar Conta</button>
         </div>
+
         <form id="auth-form" class="space-y-4">
-            <div id="name-field" class="hidden"><input type="text" id="nome" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none" placeholder="Nome"></div>
-            <input type="email" id="email" required class="w-full p-4 bg-slate-50 border rounded-2xl outline-none" placeholder="E-mail">
-            <input type="password" id="senha" required class="w-full p-4 bg-slate-50 border rounded-2xl outline-none" placeholder="Senha">
-            <button type="submit" class="w-full bg-slate-900 text-white p-5 rounded-2xl font-bold">Entrar</button>
+            <div id="name-field" class="hidden">
+                <label class="text-[10px] font-black uppercase text-slate-400 ml-2">Nome Completo</label>
+                <input type="text" id="nome" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition" placeholder="Ex: Matheus Monteiro">
+            </div>
+
+            <div>
+                <label class="text-[10px] font-black uppercase text-slate-400 ml-2">E-mail</label>
+                <input type="email" id="email" required class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition" placeholder="seu@email.com">
+            </div>
+
+            <div>
+                <label class="text-[10px] font-black uppercase text-slate-400 ml-2">Senha</label>
+                <input type="password" id="senha" required class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="w-full bg-slate-900 text-white p-5 rounded-2xl font-bold hover:bg-blue-600 transition-all shadow-xl shadow-blue-900/10 mt-4">
+                Acessar Plataforma
+            </button>
         </form>
+        
+        <p class="text-center text-slate-400 text-xs mt-8">
+            &copy; 2026 Synthera TCC • Inteligência Comportamental
+        </p>
     </div>
+
     <script src="js/app.js"></script>
 </body>
 </html>

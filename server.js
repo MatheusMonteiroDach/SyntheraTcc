@@ -12,6 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = new sqlite3.Database('./database.db');
 
 db.serialize(() => {
+    // 1. Cria as tabelas (se não existirem)
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
@@ -29,16 +30,19 @@ db.serialize(() => {
         FOREIGN KEY(user_id) REFERENCES users(id)
     )`);
 
+    // 2. FORÇAR VOCÊ COMO GESTOR (O Pulo do Gato)
     const adminEmail = 'dachmatheus@gmail.com';
     const hashAdmin = bcrypt.hashSync('123456', 10);
-    db.run("INSERT OR REPLACE INTO users (nome, email, senha_hash, tipo) VALUES (?, ?, ?, ?)", 
+    
+    // Primeiro, tentamos inserir. Se já existir, ele não faz nada (IGNORE).
+    db.run("INSERT OR IGNORE INTO users (nome, email, senha_hash, tipo) VALUES (?, ?, ?, ?)", 
     ['Matheus Admin', adminEmail, hashAdmin, 'gestor']);
 
-    const hashAluno = bcrypt.hashSync('123456', 10);
-    db.run("INSERT OR IGNORE INTO users (nome, email, senha_hash, tipo) VALUES (?, ?, ?, ?)", 
-    ['João Silva (Teste)', 'aluno@teste.com', hashAluno, 'aluno']);
+    // LOGO EM SEGUIDA, forçamos o UPDATE para garantir que você seja 'gestor'
+    db.run("UPDATE users SET tipo = 'gestor', senha_hash = ? WHERE email = ?", [hashAdmin, adminEmail], (err) => {
+        if(!err) console.log(`-> Permissões de GESTOR confirmadas para: ${adminEmail}`);
+    });
 });
-
 // --- API ROUTES ---
 
 app.post('/api/login', (req, res) => {
