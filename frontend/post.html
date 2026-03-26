@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthera | Academy Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { brand: { 950: '#020617', 500: '#3b82f6' } } }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-slate-900 antialiased">
+
+    <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-brand-500 z-[100] transition-all duration-150" style="width: 0%"></div>
+
+    <nav class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-100 p-5 z-50">
+        <div class="max-w-3xl mx-auto flex justify-between items-center">
+            <a href="blog.html" class="flex items-center gap-2 text-slate-500 hover:text-brand-500 font-bold transition">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Blog
+            </a>
+            <div class="flex items-center gap-2 text-brand-950 font-black italic">
+                <i class="fa-solid fa-brain text-brand-500"></i> SYNTHERA
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-3xl mx-auto pt-20 pb-10 px-6">
+        <span id="post-category" class="bg-blue-50 text-brand-500 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 inline-block">Categoria</span>
+        <h1 id="post-title" class="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tighter">Carregando artigo...</h1>
+        <div class="flex items-center gap-4 text-slate-400 text-sm font-bold">
+            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-brand-500"><i class="fa-solid fa-user-pen"></i></div>
+            <div>
+                <p class="text-slate-900">Equipe Synthera</p>
+                <p>Março, 2026 • 5 min de leitura</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="post-content" class="max-w-3xl mx-auto px-6 pb-32 prose prose-slate prose-lg lg:prose-xl leading-relaxed text-slate-600">
+        </main>
+
+    <section class="bg-slate-50 py-20 border-t border-slate-100 text-center px-6">
+        <div class="max-w-xl mx-auto">
+            <h3 class="text-2xl font-black mb-4">Gostou desse conteúdo?</h3>
+            <p class="text-slate-500 mb-8">O próximo passo é descobrir como esse conhecimento se aplica ao seu perfil pessoal.</p>
+            <a href="teste.html" class="inline-block bg-brand-950 text-white px-10 py-4 rounded-full font-bold hover:bg-brand-500 transition shadow-xl">Fazer minha Avaliação DISC</a>
+        </div>
+    </section>
+
+    <script>
+        // BANCO DE DADOS DE ARTIGOS (Você pode adicionar quantos quiser aqui)
+        const postDatabase = {
+            'disc': {
+                category: "Metodologia",
+                title: "O que é a Metodologia DISC e por que ela funciona?",
+                content: `
+                    <p class="mb-6">A metodologia DISC não é apenas um teste de personalidade comum; é uma das ferramentas de análise comportamental mais validadas do mundo, baseada nos estudos do Dr. William Moulton Marston.</p>
+                    <h2 class="text-2xl font-black text-slate-900 mt-10 mb-4">Os Quatro Pilares</h2>
+                    <p class="mb-4">O acrônimo DISC representa os quatro perfis dominantes:</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-8">
+                        <li><strong>Dominância:</strong> Como você lida com problemas e desafios.</li>
+                        <li><strong>Influência:</strong> Como você lida com pessoas e contatos.</li>
+                        <li><strong>Estabilidade:</strong> Como você lida com o ritmo das tarefas.</li>
+                        <li><strong>Conformidade:</strong> Como você lida com regras e procedimentos.</li>
+                    </ul>
+                    <p>Entender esses perfis permite que o aprendizado seja personalizado, respeitando o tempo e o estilo de cada aluno.</p>
+                `
+            },
+            'aprendizado': {
+                category: "Educação Adaptativa",
+                title: "Como cada perfil aprende melhor?",
+                content: `
+                    <p class="mb-6">Cada pessoa processa informações de maneira diferente. No Synthera, acreditamos que o segredo do sucesso acadêmico está na adaptação do método ao perfil do aluno.</p>
+                    <h2 class="text-2xl font-black text-slate-900 mt-10 mb-4">Estratégias por Perfil</h2>
+                    <p class="mb-4">Veja alguns exemplos de como a educação adaptativa funciona na prática:</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-8">
+                        <li><strong>Alunos Dominantes (D):</strong> Aprendem melhor com metas claras, desafios práticos e resultados imediatos. Detestam enrolação.</li>
+                        <li><strong>Alunos Influentes (I):</strong> Precisam de interação. Discussões em grupo e feedbacks verbais são essenciais para eles.</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Lógica para pegar o ID da URL (?id=xxxx)
+        const params = new URLSearchParams(window.location.search);
+        const postId = params.get('id');
+        const post = postDatabase[postId] || postDatabase['disc']; // Se não achar o ID, mostra o de DISC
+
+        // Renderizar na tela
+        document.getElementById('post-category').textContent = post.category;
+        document.getElementById('post-title').textContent = post.title;
+        document.getElementById('post-content').innerHTML = post.content;
+        document.title = `Synthera | ${post.title}`;
+
+        // Barra de progresso de leitura
+        window.onscroll = () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+    </script>
+</body>
+</html>

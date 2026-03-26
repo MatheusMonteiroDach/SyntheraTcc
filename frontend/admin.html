@@ -1,41 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"><title>Synthera | Gestão</title>
+    <meta charset="UTF-8"><title>Synthera | Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-50 flex min-h-screen">
-    <aside class="w-72 bg-slate-900 text-white p-8 hidden lg:flex flex-col">
-        <div class="text-2xl font-black mb-12 text-blue-500 uppercase tracking-tighter">Synthera <span class="text-white">Admin</span></div>
-        <nav class="flex-grow space-y-4">
-            <a href="#" class="flex items-center gap-3 p-4 bg-blue-600 rounded-2xl font-bold"><i class="fa-solid fa-chart-line"></i> KPIs Gerais</a>
-            <a href="index.html" class="flex items-center gap-3 p-4 hover:bg-slate-800 rounded-2xl transition"><i class="fa-solid fa-eye"></i> Ver Site</a>
+    <aside class="w-72 bg-slate-900 text-white p-8 flex flex-col">
+        <h2 class="text-2xl font-black mb-12 text-blue-500">ADMIN</h2>
+        <nav class="space-y-4 flex-grow">
+            <a href="#" class="bg-blue-600 p-4 rounded-xl flex items-center gap-3 font-bold"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="index.html" class="p-4 rounded-xl flex items-center gap-3 hover:bg-slate-800 transition"><i class="fa-solid fa-house"></i> Site</a>
         </nav>
-        <button onclick="localStorage.clear(); location.href='index.html'" class="text-red-400 p-4 font-bold flex items-center gap-3"><i class="fa-solid fa-power-off"></i> Sair</button>
+        <button onclick="localStorage.clear(); location.href='index.html'" class="text-red-400 p-4 font-bold"><i class="fa-solid fa-power-off"></i> Sair</button>
     </aside>
-
-    <main class="flex-grow p-10">
-        <header class="mb-12">
-            <h1 class="text-4xl font-black text-slate-900">Métricas Estratégicas</h1>
-            <p class="text-slate-500">Controle de engajamento e perfis comportamentais.</p>
-        </header>
-
+    <main class="flex-grow p-12">
+        <h1 class="text-4xl font-black mb-12 text-slate-900">Métricas da Plataforma</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div class="bg-white p-8 rounded-[2rem] border shadow-sm">
-                <span class="text-slate-400 text-xs font-bold uppercase">Total de Alunos</span>
-                <h2 class="text-6xl font-black mt-2" id="kpi-alunos">0</h2>
-            </div>
-            <div class="bg-white p-8 rounded-[2rem] border shadow-sm">
-                <span class="text-slate-400 text-xs font-bold uppercase">Testes Realizados</span>
-                <h2 class="text-6xl font-black mt-2 text-blue-600" id="kpi-testes">0</h2>
-            </div>
+            <div class="bg-white p-8 rounded-[2rem] border shadow-sm"><span class="text-slate-400 text-xs font-bold uppercase">Total Alunos</span><h2 class="text-6xl font-black mt-2" id="kpi-alunos">0</h2></div>
+            <div class="bg-white p-8 rounded-[2rem] border shadow-sm"><span class="text-slate-400 text-xs font-bold uppercase">Testes Feitos</span><h2 class="text-6xl font-black mt-2 text-blue-600" id="kpi-testes">0</h2></div>
         </div>
-
-        <div class="bg-white p-10 rounded-[2.5rem] border shadow-sm">
-            <h3 class="text-2xl font-black mb-8">Distribuição Comportamental da Equipe</h3>
-            <div id="chart-container"></div>
-        </div>
+        <div class="bg-white p-10 rounded-[2.5rem] border shadow-sm"><h3 class="text-2xl font-black mb-8">Distribuição de Perfis</h3><div id="chart-container" class="space-y-6"></div></div>
     </main>
     <script src="js/app.js"></script>
 </body>
